@@ -1,5 +1,6 @@
 import { Shield, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 const ExamHeader = () => {
   return (
@@ -14,7 +15,7 @@ const ExamHeader = () => {
           </div>
           
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-            Test Integrity with FHE
+            FHESafe Exams
           </h1>
           
           <p className="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto leading-relaxed">
@@ -23,13 +24,14 @@ const ExamHeader = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button 
-              asChild
-              size="lg" 
-              className="bg-white/20 hover:bg-white/30 text-white border border-white/30 backdrop-blur-sm px-8 py-6 text-lg font-semibold transition-all duration-300 hover:scale-105"
-            >
-              <a href="#connect">Connect Student Wallet</a>
-            </Button>
+            <div className="bg-white/20 hover:bg-white/30 border border-white/30 backdrop-blur-sm rounded-lg transition-all duration-300 hover:scale-105">
+              <ConnectButton 
+                label="Connect Student Wallet"
+                showBalance={false}
+                chainStatus="none"
+                accountStatus="avatar"
+              />
+            </div>
             
             <Button 
               asChild

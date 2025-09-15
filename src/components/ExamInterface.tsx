@@ -45,6 +45,11 @@ const ExamInterface = () => {
       );
 
       toast.success('Exam submitted successfully! Your answers are encrypted and stored on-chain.');
+      
+      // Redirect to dashboard after successful submission
+      setTimeout(() => {
+        window.location.href = '/dashboard';
+      }, 2000);
     } catch (err) {
       console.error('Error submitting exam:', err);
       toast.error('Failed to submit exam. Please try again.');

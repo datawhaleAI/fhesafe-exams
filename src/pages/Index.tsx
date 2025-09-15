@@ -1,8 +1,20 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAccount } from "wagmi";
 import ExamHeader from "@/components/ExamHeader";
-import WalletConnect from "@/components/WalletConnect";
+import FeatureSection from "@/components/FeatureSection";
 import heroImage from "@/assets/exam-hero.jpg";
 
 const Index = () => {
+  const { isConnected } = useAccount();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isConnected) {
+      navigate("/dashboard");
+    }
+  }, [isConnected, navigate]);
+
   return (
     <div className="min-h-screen bg-background">
       <ExamHeader />
@@ -31,21 +43,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Wallet Connect Section */}
-      <section id="connect" className="py-20 px-6 bg-background">
-        <div className="container mx-auto max-w-4xl text-center">
-          <h2 className="text-4xl font-bold text-primary mb-6">
-            Connect Your Student Wallet
-          </h2>
-          <p className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
-            Secure your identity and access encrypted exam environments through blockchain authentication
-          </p>
-          
-          <div className="max-w-md mx-auto">
-            <WalletConnect />
-          </div>
-        </div>
-      </section>
+      {/* Features Section */}
+      <FeatureSection />
     </div>
   );
 };

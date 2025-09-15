@@ -1,73 +1,186 @@
-# Welcome to your Lovable project
+# FHESafe Exams - Secure Blockchain-Based Examination System
 
-## Project info
+A revolutionary examination platform that leverages Fully Homomorphic Encryption (FHE) and blockchain technology to ensure academic integrity, data privacy, and secure credential verification.
 
-**URL**: https://lovable.dev/projects/55f2ea78-4685-4577-8241-6fd458ba040b
+## 🔐 Key Features
 
-## How can I edit this code?
+- **Fully Homomorphic Encryption**: Student answers are encrypted and remain confidential until the submission deadline
+- **Blockchain Integration**: All exam data is stored on-chain with immutable records
+- **Wallet Authentication**: Secure student identity verification using Web3 wallets
+- **Real-time Encryption**: Answers are encrypted in real-time as students type
+- **Academic Integrity**: Tamper-proof exam records and certificate issuance
+- **Privacy-First Design**: Student data remains private while ensuring transparency
 
-There are several ways of editing your application.
+## 🚀 Technology Stack
 
-**Use Lovable**
+- **Frontend**: React 18, TypeScript, Vite
+- **UI Framework**: shadcn/ui, Tailwind CSS
+- **Blockchain**: Ethereum Sepolia Testnet
+- **Wallet Integration**: RainbowKit, Wagmi, Viem
+- **Encryption**: Zama FHEVM (Fully Homomorphic Encryption)
+- **Smart Contracts**: Solidity with FHE support
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/55f2ea78-4685-4577-8241-6fd458ba040b) and start prompting.
+## 📋 Prerequisites
 
-Changes made via Lovable will be committed automatically to this repo.
+- Node.js 18+ and npm
+- MetaMask or compatible Web3 wallet
+- Sepolia ETH for gas fees
 
-**Use your preferred IDE**
+## 🛠️ Installation & Setup
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/datawhaleAI/fhesafe-exams.git
+   cd fhesafe-exams
+   ```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-Follow these steps:
+3. **Configure environment variables**
+   ```bash
+   cp .env.example .env
+   ```
+   
+   Update the following variables in `.env`:
+   ```env
+   NEXT_PUBLIC_CHAIN_ID=11155111
+   NEXT_PUBLIC_RPC_URL=https://sepolia.infura.io/v3/YOUR_INFURA_KEY
+   NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=YOUR_WALLET_CONNECT_PROJECT_ID
+   NEXT_PUBLIC_CONTRACT_ADDRESS=YOUR_DEPLOYED_CONTRACT_ADDRESS
+   ```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+4. **Start the development server**
+   ```bash
+   npm run dev
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+5. **Open your browser**
+   Navigate to `http://localhost:5173`
 
-# Step 3: Install the necessary dependencies.
-npm i
+## 🔧 Smart Contract Deployment
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+The project includes a Solidity smart contract (`contracts/FHESafeExams.sol`) that handles:
+
+- Student registration and verification
+- Exam creation and management
+- Encrypted answer submission
+- Certificate issuance
+- Academic record tracking
+
+### Deploy to Sepolia Testnet
+
+1. **Install Hardhat** (if not already installed)
+   ```bash
+   npm install --save-dev hardhat @nomicfoundation/hardhat-toolbox
+   ```
+
+2. **Deploy the contract**
+   ```bash
+   npx hardhat run scripts/deploy.js --network sepolia
+   ```
+
+3. **Update contract address** in your `.env` file
+
+## 🎯 Usage
+
+### For Students
+
+1. **Connect Wallet**: Use MetaMask or compatible wallet to connect
+2. **Register**: Complete student registration on-chain
+3. **Take Exam**: Answer questions with real-time FHE encryption
+4. **Submit**: Submit encrypted answers to the blockchain
+5. **View Results**: Check your encrypted scores and certificates
+
+### For Instructors
+
+1. **Create Exams**: Set up new examinations with custom parameters
+2. **Monitor Progress**: Track student submissions in real-time
+3. **Issue Certificates**: Generate blockchain-verified certificates
+4. **Verify Results**: Ensure academic integrity through on-chain records
+
+## 🔒 Security Features
+
+- **FHE Protection**: All sensitive data is encrypted using Fully Homomorphic Encryption
+- **Blockchain Immutability**: Exam records cannot be tampered with
+- **Wallet Authentication**: Secure identity verification
+- **Privacy Preservation**: Student data remains confidential
+- **Academic Integrity**: Transparent and verifiable examination process
+
+## 📱 Supported Wallets
+
+- MetaMask
+- WalletConnect
+- Coinbase Wallet
+- Rainbow Wallet
+- And other WalletConnect-compatible wallets
+
+## 🌐 Network Configuration
+
+Currently configured for:
+- **Ethereum Sepolia Testnet** (Chain ID: 11155111)
+- **FHEVM Integration** for homomorphic encryption
+
+## 🚀 Deployment
+
+### Vercel Deployment
+
+1. **Connect to Vercel**
+   - Import your GitHub repository to Vercel
+   - Configure environment variables in Vercel dashboard
+
+2. **Build Settings**
+   - Framework Preset: Vite
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+
+3. **Environment Variables**
+   Add all variables from your `.env` file to Vercel
+
+4. **Deploy**
+   - Click "Deploy" to start the deployment process
+
+### Manual Deployment
+
+```bash
+npm run build
+npm run preview
 ```
 
-**Edit a file directly in GitHub**
+## 🤝 Contributing
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-**Use GitHub Codespaces**
+## 📄 License
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## What technologies are used for this project?
+## 🔗 Links
 
-This project is built with:
+- **Documentation**: [FHESafe Exams Docs](https://docs.fhesafe-exams.com)
+- **Demo**: [Live Demo](https://fhesafe-exams.vercel.app)
+- **Smart Contract**: [Contract Source](contracts/FHESafeExams.sol)
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## ⚠️ Important Notes
 
-## How can I deploy this project?
+- This is a demonstration project for educational purposes
+- Always use testnet for development and testing
+- Ensure you have sufficient Sepolia ETH for gas fees
+- Keep your private keys secure and never commit them to version control
 
-Simply open [Lovable](https://lovable.dev/projects/55f2ea78-4685-4577-8241-6fd458ba040b) and click on Share -> Publish.
+## 🆘 Support
 
-## Can I connect a custom domain to my Lovable project?
+For support and questions:
+- Create an issue in this repository
+- Contact the development team
+- Check the documentation for common solutions
 
-Yes, you can!
+---
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+**Built with ❤️ by the DataWhale AI team**

@@ -242,7 +242,7 @@ const CONTRACT_ABI = [
   }
 ] as const;
 
-const CONTRACT_ADDRESS = import.meta.env.VITE_CONTRACT_ADDRESS || '0x742d35Cc6634C0532925a3b8D4C9db96C4b4d2b6';
+const CONTRACT_ADDRESS = import.meta.env.VITE_CONTRACT_ADDRESS || 'YOUR_DEPLOYED_CONTRACT_ADDRESS';
 
 export const useContract = () => {
   const { address, isConnected } = useAccount();

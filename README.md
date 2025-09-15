@@ -1,6 +1,6 @@
-# FHESafe Exams - Secure Blockchain-Based Examination System
+# FHESafe Exams - Next-Generation Secure Examination Platform
 
-A revolutionary examination platform that leverages Fully Homomorphic Encryption (FHE) and blockchain technology to ensure academic integrity, data privacy, and secure credential verification.
+A cutting-edge academic assessment system that combines the power of Fully Homomorphic Encryption (FHE) with blockchain technology to revolutionize how educational institutions conduct secure, transparent, and privacy-preserving examinations.
 
 ## 🔐 Key Features
 
@@ -47,8 +47,9 @@ A revolutionary examination platform that leverages Fully Homomorphic Encryption
    Update the following variables in `.env`:
    ```env
    NEXT_PUBLIC_CHAIN_ID=11155111
-   NEXT_PUBLIC_RPC_URL=https://sepolia.infura.io/v3/YOUR_INFURA_KEY
+   NEXT_PUBLIC_RPC_URL=https://sepolia.infura.io/v3/YOUR_INFURA_API_KEY
    NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=YOUR_WALLET_CONNECT_PROJECT_ID
+   NEXT_PUBLIC_INFURA_API_KEY=YOUR_INFURA_API_KEY
    NEXT_PUBLIC_CONTRACT_ADDRESS=YOUR_DEPLOYED_CONTRACT_ADDRESS
    ```
 

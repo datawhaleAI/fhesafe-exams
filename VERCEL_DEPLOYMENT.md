@@ -36,6 +36,14 @@ This guide provides step-by-step instructions for deploying the FHESafe Exams pl
 #### Root Directory
 - Leave as default (root of the repository)
 
+#### SPA Routing Configuration
+**Important**: This project includes a `vercel.json` file that configures:
+- **SPA Routing**: All routes redirect to `index.html` for React Router compatibility
+- **CORS Headers**: Proper headers for API calls
+- **Function Runtime**: Node.js 18.x for optimal performance
+
+This ensures that direct links to routes like `/dashboard` work correctly.
+
 ### Step 4: Configure Environment Variables
 
 Click "Environment Variables" and add the following variables:
@@ -169,6 +177,43 @@ If you deploy a new smart contract:
 3. **CORS**: Configure CORS settings for API endpoints
 4. **Rate Limiting**: Implement rate limiting for API calls
 5. **Monitoring**: Set up error tracking and performance monitoring
+
+## Troubleshooting
+
+### Common Issues
+
+#### 404 Errors on Direct Routes
+**Problem**: Getting 404 errors when accessing routes like `/dashboard` directly.
+
+**Solution**: 
+1. Ensure `vercel.json` file is present in your project root
+2. Verify the file contains the SPA routing configuration:
+   ```json
+   {
+     "rewrites": [
+       {
+         "source": "/(.*)",
+         "destination": "/index.html"
+       }
+     ]
+   }
+   ```
+3. Redeploy the application after adding the configuration
+
+#### Build Failures
+- **Node.js Version**: Ensure you're using Node.js 18+
+- **Dependencies**: Run `npm install` locally to check for dependency issues
+- **Environment Variables**: Verify all required variables are set
+
+#### Runtime Errors
+- **Console Errors**: Check browser developer tools for JavaScript errors
+- **Network Issues**: Verify RPC URLs and API keys are correct
+- **Wallet Connection**: Ensure WalletConnect Project ID is valid
+
+#### Performance Issues
+- **Bundle Size**: Consider code splitting for large applications
+- **Image Optimization**: Use WebP format for better performance
+- **Caching**: Enable Vercel's edge caching for static assets
 
 ## Performance Optimization
 

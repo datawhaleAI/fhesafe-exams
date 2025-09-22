@@ -28,7 +28,7 @@ const Platform = () => {
               className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
-              返回首页
+              Back to Homepage
             </Link>
             <div className="flex items-center gap-3">
               <FileText className="w-8 h-8 text-primary" />
@@ -48,22 +48,23 @@ const Platform = () => {
                   <Lock className="w-12 h-12 text-white" />
                 </div>
                 <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                  欢迎使用FHESafe考试平台
+                  Welcome to FHESafe Exam Platform
                 </h2>
                 <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                  请连接您的钱包以访问安全的考试环境。我们使用全同态加密技术保护您的隐私。
+                  Please connect your wallet to access the secure exam environment. 
+                  We use Fully Homomorphic Encryption technology to protect your privacy.
                 </p>
               </div>
 
               <Card className="p-8 max-w-md mx-auto mb-8">
                 <div className="text-center">
-                  <h3 className="text-xl font-semibold mb-4">连接钱包</h3>
+                  <h3 className="text-xl font-semibold mb-4">Connect Wallet</h3>
                   <p className="text-gray-600 mb-6">
-                    连接您的数字钱包以开始安全考试
+                    Connect your digital wallet to start secure exams
                   </p>
                   <div className="bg-gradient-to-r from-purple-500 to-blue-600 rounded-lg p-4">
                     <ConnectButton 
-                      label="连接钱包开始考试"
+                      label="Connect Wallet to Start Exam"
                       showBalance={false}
                       chainStatus="none"
                       accountStatus="avatar"
@@ -78,9 +79,9 @@ const Platform = () => {
                   <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <Lock className="w-6 h-6 text-purple-600" />
                   </div>
-                  <h4 className="font-semibold mb-2">完全加密</h4>
+                  <h4 className="font-semibold mb-2">Fully Encrypted</h4>
                   <p className="text-sm text-gray-600">
-                    答案在提交前完全加密保护
+                    Answers are fully encrypted before submission
                   </p>
                 </Card>
 
@@ -88,9 +89,9 @@ const Platform = () => {
                   <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <Users className="w-6 h-6 text-blue-600" />
                   </div>
-                  <h4 className="font-semibold mb-2">身份验证</h4>
+                  <h4 className="font-semibold mb-2">Identity Verification</h4>
                   <p className="text-sm text-gray-600">
-                    基于区块链的防作弊验证
+                    Blockchain-based anti-cheating verification
                   </p>
                 </Card>
 
@@ -98,16 +99,16 @@ const Platform = () => {
                   <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <Award className="w-6 h-6 text-green-600" />
                   </div>
-                  <h4 className="font-semibold mb-2">可信证书</h4>
+                  <h4 className="font-semibold mb-2">Trusted Certificates</h4>
                   <p className="text-sm text-gray-600">
-                    区块链不可篡改证书
+                    Blockchain immutable certificates
                   </p>
                 </Card>
               </div>
 
               <div className="text-center">
                 <p className="text-sm text-gray-500 mb-4">
-                  还没有钱包？我们推荐使用以下钱包：
+                  Don't have a wallet? We recommend using the following wallets:
                 </p>
                 <div className="flex justify-center gap-4 text-sm text-gray-600">
                   <span>MetaMask</span>
@@ -125,10 +126,10 @@ const Platform = () => {
                   <Lock className="w-8 h-8 text-green-600" />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                  钱包已连接
+                  Wallet Connected
                 </h2>
                 <p className="text-gray-600">
-                  正在跳转到您的个人仪表板...
+                  Redirecting to your personal dashboard...
                 </p>
               </div>
             </div>

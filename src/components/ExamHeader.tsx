@@ -32,7 +32,7 @@ const ExamHeader = () => {
               className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-6 text-lg transition-all duration-300 hover:scale-105"
             >
               <Link to="/platform" className="flex items-center gap-2">
-                进入考试平台 <ArrowRight className="w-5 h-5" />
+                Enter Exam Platform <ArrowRight className="w-5 h-5" />
               </Link>
             </Button>
             
@@ -42,7 +42,7 @@ const ExamHeader = () => {
               size="lg"
               className="border-white/30 text-white hover:bg-white/10 px-8 py-6 text-lg backdrop-blur-sm transition-all duration-300"
             >
-              <Link to="/learn">了解FHE技术</Link>
+              <Link to="/learn">Learn About FHE</Link>
             </Button>
           </div>
         </div>

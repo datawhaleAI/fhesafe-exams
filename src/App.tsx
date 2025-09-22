@@ -7,6 +7,7 @@ import { WagmiProvider } from 'wagmi';
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { config } from './lib/wagmi';
 import Index from "./pages/Index";
+import Platform from "./pages/Platform";
 import Dashboard from "./pages/Dashboard";
 import ExamPage from "./pages/ExamPage";
 import LearnPage from "./pages/LearnPage";
@@ -25,6 +26,7 @@ const App = () => (
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/platform" element={<Platform />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/exam" element={<ExamPage />} />
               <Route path="/learn" element={<LearnPage />} />

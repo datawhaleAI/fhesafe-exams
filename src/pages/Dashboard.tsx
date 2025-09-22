@@ -6,7 +6,7 @@ import {
   BookOpen, 
   Clock, 
   Award, 
-  Shield, 
+  FileText, 
   CheckCircle, 
   AlertCircle,
   User,
@@ -42,7 +42,7 @@ const Dashboard = () => {
         <div className="container mx-auto max-w-6xl py-6 px-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Shield className="w-8 h-8 text-primary" />
+              <FileText className="w-8 h-8 text-primary" />
               <h1 className="text-2xl font-bold text-primary">FHESafe Exams</h1>
             </div>
             <div className="flex items-center gap-4">

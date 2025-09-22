@@ -1,37 +1,37 @@
-import { Shield, Lock } from "lucide-react";
+import { FileText, Lock, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { Link } from "react-router-dom";
 
 const ExamHeader = () => {
   return (
-    <header className="relative overflow-hidden bg-gradient-encryption py-20 px-6">
+    <header className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-20 px-6">
       <div className="absolute inset-0 bg-white/5 opacity-20"></div>
       
       <div className="container mx-auto max-w-6xl relative z-10">
         <div className="text-center text-white">
           <div className="flex items-center justify-center gap-3 mb-6">
-            <Shield className="w-12 h-12 animate-secure-glow" />
-            <Lock className="w-8 h-8 animate-lock-bounce" />
+            <FileText className="w-12 h-12 animate-pulse" />
+            <Lock className="w-8 h-8 animate-bounce" />
           </div>
           
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
             FHESafe Exams
           </h1>
           
-          <p className="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto leading-relaxed">
-            Revolutionary exam platform using Fully Homomorphic Encryption to ensure 
-            answers remain confidential until submission deadline
+          <p className="text-xl md:text-2xl mb-8 text-purple-100 max-w-3xl mx-auto leading-relaxed">
+            革命性的考试平台，使用全同态加密技术确保答案在提交截止日期前保持机密
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <div className="bg-white/20 hover:bg-white/30 border border-white/30 backdrop-blur-sm rounded-lg transition-all duration-300 hover:scale-105">
-              <ConnectButton 
-                label="Connect Student Wallet"
-                showBalance={false}
-                chainStatus="none"
-                accountStatus="avatar"
-              />
-            </div>
+            <Button 
+              asChild
+              size="lg"
+              className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-6 text-lg transition-all duration-300 hover:scale-105"
+            >
+              <Link to="/platform" className="flex items-center gap-2">
+                进入考试平台 <ArrowRight className="w-5 h-5" />
+              </Link>
+            </Button>
             
             <Button 
               asChild
@@ -39,7 +39,7 @@ const ExamHeader = () => {
               size="lg"
               className="border-white/30 text-white hover:bg-white/10 px-8 py-6 text-lg backdrop-blur-sm transition-all duration-300"
             >
-              <a href="/learn">Learn About FHE</a>
+              <Link to="/learn">了解FHE技术</Link>
             </Button>
           </div>
         </div>

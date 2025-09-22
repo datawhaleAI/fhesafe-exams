@@ -34,7 +34,8 @@ const Index = () => {
             </h1>
             
             <p className="text-xl md:text-2xl mb-8 text-purple-100 max-w-3xl mx-auto leading-relaxed">
-              革命性的考试平台，使用全同态加密技术确保答案在提交截止日期前保持机密
+              Revolutionary exam platform using Fully Homomorphic Encryption to ensure 
+              answers remain confidential until submission deadline
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -43,7 +44,7 @@ const Index = () => {
                 size="lg"
                 className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-6 text-lg transition-all duration-300 hover:scale-105"
               >
-                <Link to="/platform">进入考试平台</Link>
+                <Link to="/platform">Enter Exam Platform</Link>
               </Button>
               
               <Button 
@@ -52,7 +53,7 @@ const Index = () => {
                 size="lg"
                 className="border-white/30 text-white hover:bg-white/10 px-8 py-6 text-lg backdrop-blur-sm transition-all duration-300"
               >
-                <Link to="/learn">了解FHE技术</Link>
+                <Link to="/learn">Learn About FHE</Link>
               </Button>
             </div>
           </div>
@@ -64,10 +65,11 @@ const Index = () => {
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              为什么选择FHESafe Exams？
+              Why Choose FHESafe Exams?
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              我们采用最先进的全同态加密技术，为教育机构提供真正安全的在线考试解决方案
+              We use cutting-edge Fully Homomorphic Encryption technology to provide 
+              truly secure online examination solutions for educational institutions
             </p>
           </div>
 
@@ -76,9 +78,10 @@ const Index = () => {
               <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Lock className="w-8 h-8 text-purple-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-4">完全隐私保护</h3>
+              <h3 className="text-xl font-semibold mb-4">Complete Privacy Protection</h3>
               <p className="text-gray-600">
-                答案在提交前完全加密，连系统管理员也无法查看，确保考试公平性
+                Answers are fully encrypted before submission, even system administrators 
+                cannot view them, ensuring exam fairness
               </p>
             </Card>
 
@@ -86,9 +89,10 @@ const Index = () => {
               <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Brain className="w-8 h-8 text-blue-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-4">智能防作弊</h3>
+              <h3 className="text-xl font-semibold mb-4">Smart Anti-Cheating</h3>
               <p className="text-gray-600">
-                基于区块链的身份验证和加密技术，有效防止代考和作弊行为
+                Blockchain-based identity verification and encryption technology 
+                effectively prevent proxy testing and cheating
               </p>
             </Card>
 
@@ -96,9 +100,10 @@ const Index = () => {
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Award className="w-8 h-8 text-green-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-4">可信证书</h3>
+              <h3 className="text-xl font-semibold mb-4">Trusted Certificates</h3>
               <p className="text-gray-600">
-                基于区块链的不可篡改证书，确保学历和成绩的真实性
+                Blockchain-based immutable certificates ensure the authenticity 
+                of academic credentials and grades
               </p>
             </Card>
           </div>
@@ -111,28 +116,29 @@ const Index = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-4xl font-bold text-gray-900 mb-6">
-                全同态加密技术
+                Fully Homomorphic Encryption Technology
               </h2>
               <p className="text-lg text-gray-600 mb-8">
-                全同态加密（FHE）允许在不解密数据的情况下进行计算，这意味着：
+                Fully Homomorphic Encryption (FHE) allows computation on encrypted data 
+                without decryption, which means:
               </p>
               
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
                   <CheckCircle className="w-6 h-6 text-green-500" />
-                  <span className="text-gray-700">答案在提交前完全加密</span>
+                  <span className="text-gray-700">Answers are fully encrypted before submission</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle className="w-6 h-6 text-green-500" />
-                  <span className="text-gray-700">系统可以处理加密数据</span>
+                  <span className="text-gray-700">System can process encrypted data</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle className="w-6 h-6 text-green-500" />
-                  <span className="text-gray-700">只有授权人员才能解密</span>
+                  <span className="text-gray-700">Only authorized personnel can decrypt</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle className="w-6 h-6 text-green-500" />
-                  <span className="text-gray-700">确保考试过程的绝对公平</span>
+                  <span className="text-gray-700">Ensures absolute fairness in the exam process</span>
                 </div>
               </div>
             </div>
@@ -141,23 +147,23 @@ const Index = () => {
               <div className="bg-gradient-to-br from-purple-500 to-blue-600 rounded-2xl p-8 text-white">
                 <div className="text-center">
                   <Zap className="w-16 h-16 mx-auto mb-4" />
-                  <h3 className="text-2xl font-bold mb-4">技术优势</h3>
+                  <h3 className="text-2xl font-bold mb-4">Technical Advantages</h3>
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div className="bg-white/20 rounded-lg p-3">
-                      <div className="font-semibold">零知识证明</div>
-                      <div className="opacity-80">保护隐私</div>
+                      <div className="font-semibold">Zero-Knowledge Proofs</div>
+                      <div className="opacity-80">Privacy Protection</div>
                     </div>
                     <div className="bg-white/20 rounded-lg p-3">
-                      <div className="font-semibold">区块链验证</div>
-                      <div className="opacity-80">不可篡改</div>
+                      <div className="font-semibold">Blockchain Verification</div>
+                      <div className="opacity-80">Immutable</div>
                     </div>
                     <div className="bg-white/20 rounded-lg p-3">
-                      <div className="font-semibold">智能合约</div>
-                      <div className="opacity-80">自动执行</div>
+                      <div className="font-semibold">Smart Contracts</div>
+                      <div className="opacity-80">Automated Execution</div>
                     </div>
                     <div className="bg-white/20 rounded-lg p-3">
-                      <div className="font-semibold">去中心化</div>
-                      <div className="opacity-80">高度安全</div>
+                      <div className="font-semibold">Decentralized</div>
+                      <div className="opacity-80">Highly Secure</div>
                     </div>
                   </div>
                 </div>
@@ -171,10 +177,10 @@ const Index = () => {
       <section className="py-20 px-6 bg-gradient-to-r from-purple-600 to-blue-600">
         <div className="container mx-auto max-w-4xl text-center text-white">
           <h2 className="text-4xl font-bold mb-6">
-            准备开始您的安全考试之旅？
+            Ready to Start Your Secure Exam Journey?
           </h2>
           <p className="text-xl mb-8 opacity-90">
-            加入我们，体验下一代加密考试技术
+            Join us and experience next-generation encrypted examination technology
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
@@ -183,7 +189,7 @@ const Index = () => {
               className="bg-white text-purple-600 hover:bg-gray-100 px-8 py-6 text-lg"
             >
               <Link to="/platform" className="flex items-center gap-2">
-                立即开始 <ArrowRight className="w-5 h-5" />
+                Get Started Now <ArrowRight className="w-5 h-5" />
               </Link>
             </Button>
             <Button 
@@ -194,7 +200,7 @@ const Index = () => {
             >
               <Link to="/learn" className="flex items-center gap-2">
                 <BookOpen className="w-5 h-5" />
-                了解更多
+                Learn More
               </Link>
             </Button>
           </div>

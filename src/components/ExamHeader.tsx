@@ -14,12 +14,15 @@ const ExamHeader = () => {
             <Lock className="w-8 h-8 animate-bounce" />
           </div>
           
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
-            FHESafe Exams
-          </h1>
+          <Link to="/" className="block">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent hover:from-purple-200 hover:to-white transition-all duration-300">
+              FHESafe Exams
+            </h1>
+          </Link>
           
           <p className="text-xl md:text-2xl mb-8 text-purple-100 max-w-3xl mx-auto leading-relaxed">
-            革命性的考试平台，使用全同态加密技术确保答案在提交截止日期前保持机密
+            Revolutionary exam platform using Fully Homomorphic Encryption to ensure 
+            answers remain confidential until submission deadline
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

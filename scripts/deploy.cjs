@@ -16,12 +16,13 @@ async function main() {
     process.exit(1);
   }
   
-  // Deploy the contract
-  console.log("📦 Deploying ExamContract...");
-  const ExamContract = await ethers.getContractFactory("ExamContract");
-  
-  const examContract = await ExamContract.deploy();
-  await examContract.waitForDeployment();
+        // Deploy the contract
+        console.log("📦 Deploying FHESafeExams...");
+        const FHESafeExams = await ethers.getContractFactory("FHESafeExams");
+
+        // Use deployer address as verifier for testing
+        const examContract = await FHESafeExams.deploy(deployer.address);
+        await examContract.waitForDeployment();
   
   const contractAddress = await examContract.getAddress();
   console.log("✅ ExamContract deployed to:", contractAddress);

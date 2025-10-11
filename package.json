@@ -13,6 +13,8 @@
     "compile": "hardhat compile",
     "deploy:sepolia": "hardhat run scripts/deploy.cjs --network sepolia",
     "deploy:localhost": "hardhat run scripts/deploy.cjs --network localhost",
+    "init-test-data": "hardhat run scripts/init-test-data.cjs --network sepolia",
+    "get-exam-data": "hardhat run scripts/get-exam-data.cjs --network sepolia",
     "test": "hardhat test",
     "verify": "hardhat verify",
     "setup-env": "node scripts/setup-env.js"

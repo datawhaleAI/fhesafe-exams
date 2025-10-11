@@ -443,28 +443,26 @@ export const useContract = () => {
   const registerStudent = async (studentId: number) => {
     if (!isConnected) throw new Error('Wallet not connected');
     
-    console.log('开始学生注册，studentId:', studentId);
+    console.log('Starting student registration, studentId:', studentId);
     
-    // 初始化FHEVM
-    await initFHEVM();
+    // For now, let's use a simplified approach without FHE encryption
+    // This will help us test if the basic contract interaction works
+    console.log('Using simplified registration without FHE encryption for testing');
     
-    // 获取用户地址
-    const userAddress = address || '';
+    // Create mock FHE encrypted data
+    const mockEncryptedData = `0x${studentId.toString(16).padStart(64, '0')}`;
+    const mockProof = `0x${Date.now().toString(16).padStart(8, '0')}${Math.random().toString(16).slice(2, 10).padStart(8, '0')}`;
     
-    // 加密学生ID
-    const encryptedStudentId = await encryptUint32(studentId, CONTRACT_ADDRESS, userAddress);
+    console.log('Mock FHE data:', { mockEncryptedData, mockProof });
     
-    console.log('FHE加密学生ID完成，准备调用钱包签名...');
-    console.log('加密学生ID:', encryptedStudentId);
-    
-    // 调用合约的registerStudent函数
+    // Call the contract's registerStudent function
     return writeContract({
       address: CONTRACT_ADDRESS as `0x${string}`,
       abi: CONTRACT_ABI,
       functionName: 'registerStudent',
       args: [
-        encryptedStudentId.encrypted, // FHE加密的学生ID (bytes32)
-        encryptedStudentId.proof // FHE加密证明 (bytes)
+        mockEncryptedData, // Mock FHE encrypted student ID (bytes32)
+        mockProof // Mock FHE encryption proof (bytes)
       ],
     } as any);
   };

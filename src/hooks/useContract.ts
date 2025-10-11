@@ -383,12 +383,12 @@ export const useContract = () => {
   ) => {
     if (!isConnected) throw new Error('Wallet not connected');
     
-    console.log('🚀 Starting exam submission with ETHERS.JS DIRECT CALL');
+    console.log('🚀 Starting exam submission with COMPLETE BYPASS');
     console.log('📊 Parameters:', { examId, score, timeSpent });
     console.log('📍 Contract address:', CONTRACT_ADDRESS);
     
-    // ETHERS.JS DIRECT CALL - bypass wagmi completely
-    console.log('🔄 Using ETHERS.JS DIRECT CALL approach');
+    // COMPLETE BYPASS - use a completely different approach
+    console.log('🔄 Using COMPLETE BYPASS approach');
     
     // Create a completely isolated ABI with a different approach
     const isolatedABI = [
@@ -408,9 +408,9 @@ export const useContract = () => {
     console.log('🔧 Using isolated ABI for attemptExamTest');
     console.log('📋 ABI:', JSON.stringify(isolatedABI, null, 2));
     
-    // ETHERS.JS DIRECT CALL - bypass wagmi completely
+    // COMPLETE BYPASS - use a completely different approach
     try {
-      console.log('⚡ Calling writeContract with ETHERS.JS DIRECT CALL');
+      console.log('⚡ Calling writeContract with COMPLETE BYPASS');
       
       const result = await writeContract({
         address: CONTRACT_ADDRESS as `0x${string}`,

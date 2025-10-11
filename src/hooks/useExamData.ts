@@ -58,6 +58,10 @@ export const useExamData = () => {
     address: CONTRACT_ADDRESS as `0x${string}`,
     abi: CONTRACT_ABI,
     functionName: 'examCounter',
+    query: {
+      refetchInterval: 5000, // Refetch every 5 seconds
+      staleTime: 0, // Always consider data stale
+    },
   });
 
   // Get student counter
@@ -65,6 +69,10 @@ export const useExamData = () => {
     address: CONTRACT_ADDRESS as `0x${string}`,
     abi: CONTRACT_ABI,
     functionName: 'studentCounter',
+    query: {
+      refetchInterval: 5000, // Refetch every 5 seconds
+      staleTime: 0, // Always consider data stale
+    },
   });
 
   // Get attempt counter
@@ -72,6 +80,10 @@ export const useExamData = () => {
     address: CONTRACT_ADDRESS as `0x${string}`,
     abi: CONTRACT_ABI,
     functionName: 'attemptCounter',
+    query: {
+      refetchInterval: 5000, // Refetch every 5 seconds
+      staleTime: 0, // Always consider data stale
+    },
   });
 
   // Get certificate counter
@@ -79,6 +91,10 @@ export const useExamData = () => {
     address: CONTRACT_ADDRESS as `0x${string}`,
     abi: CONTRACT_ABI,
     functionName: 'certificateCounter',
+    query: {
+      refetchInterval: 5000, // Refetch every 5 seconds
+      staleTime: 0, // Always consider data stale
+    },
   });
 
   return {

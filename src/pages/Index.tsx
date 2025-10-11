@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { 
   FileText, 
   Lock, 
@@ -45,9 +46,7 @@ const Index = () => {
                   </Button>
                 </div>
               ) : (
-                <Button asChild variant="outline">
-                  <Link to="/register">Connect Wallet</Link>
-                </Button>
+                <ConnectButton />
               )}
             </div>
           </div>

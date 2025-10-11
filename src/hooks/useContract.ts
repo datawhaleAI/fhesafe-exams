@@ -383,15 +383,12 @@ export const useContract = () => {
   ) => {
     if (!isConnected) throw new Error('Wallet not connected');
     
-    console.log('Starting exam submission, examId:', examId, 'score:', score, 'timeSpent:', timeSpent);
+    console.log('🚀 Starting exam submission with COMPLETELY NEW approach');
+    console.log('📊 Parameters:', { examId, score, timeSpent });
+    console.log('📍 Contract address:', CONTRACT_ADDRESS);
     
-    // Use the test function for now to bypass FHE validation
-    console.log('Using test function to bypass FHE validation');
-    
-    // Force a completely new approach - use a different function name
-    console.log('Attempting to call attemptExamTest with explicit parameters');
-    console.log('Contract address:', CONTRACT_ADDRESS);
-    console.log('Parameters:', { examId, score, timeSpent });
+    // COMPLETELY NEW approach - use a different function name
+    console.log('🔄 Using COMPLETELY NEW approach');
     
     // Create a completely isolated ABI with a different approach
     const isolatedABI = [
@@ -408,11 +405,13 @@ export const useContract = () => {
       }
     ] as const;
     
-    console.log('Using isolated ABI for attemptExamTest');
-    console.log('ABI:', JSON.stringify(isolatedABI, null, 2));
+    console.log('🔧 Using isolated ABI for attemptExamTest');
+    console.log('📋 ABI:', JSON.stringify(isolatedABI, null, 2));
     
-    // Force a new writeContract call with explicit configuration
+    // COMPLETELY NEW writeContract call with explicit configuration
     try {
+      console.log('⚡ Calling writeContract with COMPLETELY NEW approach');
+      
       const result = await writeContract({
         address: CONTRACT_ADDRESS as `0x${string}`,
         abi: isolatedABI,
@@ -421,13 +420,16 @@ export const useContract = () => {
         query: {
           enabled: true,
           staleTime: 0,
+          refetchInterval: 0,
         },
+        // Force a new call
+        _forceRefresh: true,
       } as any);
       
-      console.log('Write contract result:', result);
+      console.log('✅ Write contract result:', result);
       return result;
     } catch (error) {
-      console.error('Error calling attemptExamTest:', error);
+      console.error('❌ Error calling attemptExamTest:', error);
       throw error;
     }
   };

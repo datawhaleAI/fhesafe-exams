@@ -298,10 +298,29 @@ const CONTRACT_ABI = [
     ],
     "stateMutability": "nonpayable",
     "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "studentId",
+        "type": "uint256"
+      }
+    ],
+    "name": "registerStudentTest",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
   }
 ] as const;
 
-const CONTRACT_ADDRESS = import.meta.env.VITE_CONTRACT_ADDRESS || import.meta.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '0x04FA6321a2C2c255EEA836A1A4523e935E17959B';
+const CONTRACT_ADDRESS = import.meta.env.VITE_CONTRACT_ADDRESS || import.meta.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '0x8204BA297d5442A433Ca81bd81eA2693353e11A0';
 
 export const useContract = () => {
   const { address, isConnected } = useAccount();

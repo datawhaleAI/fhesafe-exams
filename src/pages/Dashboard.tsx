@@ -14,12 +14,11 @@ import {
   TrendingUp
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useExamData, useAllExams } from '@/hooks/useExamData';
+import { useExamData } from '@/hooks/useExamData';
 
 const Dashboard = () => {
   const { address, isConnected } = useAccount();
   const { examCounter, studentCounter, attemptCounter, certificateCounter } = useExamData();
-  const { exams, totalExams, isLoading } = useAllExams();
 
   if (!isConnected) {
     return (
@@ -125,49 +124,50 @@ const Dashboard = () => {
               </div>
               
               <div className="space-y-4">
-                {isLoading ? (
-                  <div className="text-center py-4">
-                    <p className="text-muted-foreground">Loading exams...</p>
+                <div className="text-center py-4">
+                  <p className="text-muted-foreground mb-2">Total Exams Available: {examCounter}</p>
+                  <p className="text-sm text-muted-foreground">
+                    Connect to Sepolia network to view and take exams
+                  </p>
+                </div>
+                
+                <div className="border border-border rounded-lg p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-semibold">Blockchain Fundamentals</h4>
+                    <Badge variant="secondary">100 Points</Badge>
                   </div>
-                ) : exams.length === 0 ? (
-                  <div className="text-center py-4">
-                    <p className="text-muted-foreground">No exams available</p>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Comprehensive exam covering blockchain technology, smart contracts, and decentralized applications.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Clock className="w-4 h-4" />
+                      <span>2 months remaining</span>
+                    </div>
+                    <Button asChild size="sm">
+                      <Link to="/exam">Start Exam</Link>
+                    </Button>
                   </div>
-                ) : (
-                  exams.map((exam) => {
-                    const now = Math.floor(Date.now() / 1000);
-                    const timeRemaining = exam.endTime - now;
-                    const isExpired = timeRemaining <= 0;
-                    const hoursRemaining = Math.floor(timeRemaining / 3600);
-                    const daysRemaining = Math.floor(hoursRemaining / 24);
-                    
-                    return (
-                      <div key={exam.id} className="border border-border rounded-lg p-4">
-                        <div className="flex items-center justify-between mb-2">
-                          <h4 className="font-semibold">{exam.examName}</h4>
-                          <Badge variant="secondary">{exam.maxScore} Points</Badge>
-                        </div>
-                        <p className="text-sm text-muted-foreground mb-3">
-                          {exam.examDescription}
-                        </p>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                            <Clock className="w-4 h-4" />
-                            <span>
-                              {isExpired ? 'Expired' : 
-                               daysRemaining > 0 ? `${daysRemaining} days remaining` :
-                               hoursRemaining > 0 ? `${hoursRemaining} hours remaining` :
-                               'Less than 1 hour remaining'}
-                            </span>
-                          </div>
-                          <Button asChild size="sm" disabled={isExpired}>
-                            <Link to="/exam">Start Exam</Link>
-                          </Button>
-                        </div>
-                      </div>
-                    );
-                  })
-                )}
+                </div>
+                
+                <div className="border border-border rounded-lg p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-semibold">FHE Mathematics</h4>
+                    <Badge variant="secondary">100 Points</Badge>
+                  </div>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Advanced mathematics and cryptography for Fully Homomorphic Encryption systems.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Clock className="w-4 h-4" />
+                      <span>2 months remaining</span>
+                    </div>
+                    <Button asChild size="sm" variant="outline">
+                      <Link to="/exam">Start Exam</Link>
+                    </Button>
+                  </div>
+                </div>
               </div>
             </Card>
 

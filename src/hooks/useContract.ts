@@ -383,12 +383,12 @@ export const useContract = () => {
   ) => {
     if (!isConnected) throw new Error('Wallet not connected');
     
-    console.log('🚀 Starting exam submission with NEW FUNCTION');
+    console.log('🚀 Starting exam submission with NUCLEAR OPTION');
     console.log('📊 Parameters:', { examId, score, timeSpent });
     console.log('📍 Contract address:', CONTRACT_ADDRESS);
     
-    // NEW FUNCTION - use a completely different approach
-    console.log('🔄 Using NEW FUNCTION approach');
+    // NUCLEAR OPTION - use a completely different approach
+    console.log('🔄 Using NUCLEAR OPTION approach');
     
     // Create a completely isolated ABI with a different approach
     const isolatedABI = [
@@ -408,9 +408,9 @@ export const useContract = () => {
     console.log('🔧 Using isolated ABI for attemptExamTest');
     console.log('📋 ABI:', JSON.stringify(isolatedABI, null, 2));
     
-    // NEW FUNCTION - use a completely different approach
+    // NUCLEAR OPTION - use a completely different approach
     try {
-      console.log('⚡ Calling writeContract with NEW FUNCTION');
+      console.log('⚡ Calling writeContract with NUCLEAR OPTION');
       
       const result = await writeContract({
         address: CONTRACT_ADDRESS as `0x${string}`,

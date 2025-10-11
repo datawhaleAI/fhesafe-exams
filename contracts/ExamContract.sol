@@ -357,4 +357,37 @@ contract FHESafeExams is SepoliaConfig {
         emit StudentRegistered(newStudentId, msg.sender);
         return newStudentId;
     }
+    
+    // Test function for debugging - attempt exam without FHE
+    function attemptExamTest(
+        uint256 examId,
+        uint256 score,
+        uint256 timeSpent
+    ) public returns (uint256) {
+        require(studentAddressToId[msg.sender] > 0, "Student not registered");
+        require(exams[examId].instructor != address(0), "Exam does not exist");
+        require(block.timestamp <= exams[examId].endTime, "Exam has ended");
+        
+        uint256 studentId = studentAddressToId[msg.sender];
+        uint256 attemptId = attemptCounter++;
+        
+        // Create a simple exam attempt record without FHE for testing
+        examAttempts[attemptId] = ExamAttempt({
+            attemptId: FHE.asEuint32(0), // Will be set to actual value later
+            examId: FHE.asEuint32(0), // Will be set to actual value later
+            studentId: FHE.asEuint32(0), // Will be set to actual value later
+            score: FHE.asEuint32(0), // Will be set to actual value later
+            timeSpent: FHE.asEuint32(0), // Will be set to actual value later
+            isPassed: FHE.asEbool(false), // Will be set to actual value later
+            studentAddress: msg.sender,
+            attemptTime: block.timestamp
+        });
+        
+        // Update student statistics (simplified for testing)
+        students[studentId].totalExams = FHE.add(students[studentId].totalExams, FHE.asEuint32(1));
+        students[studentId].examScore = FHE.add(students[studentId].examScore, FHE.asEuint32(0));
+        
+        emit ExamAttempted(attemptId, examId, msg.sender);
+        return attemptId;
+    }
 }

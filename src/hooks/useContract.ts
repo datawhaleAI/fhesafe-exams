@@ -1,6 +1,6 @@
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { useQuery } from '@tanstack/react-query';
-import { encryptExamScore, encryptExamTime, initFHEVM } from '@/utils/fheEncryption';
+import { encryptUint32, encryptExamScore, encryptExamTime, initFHEVM } from '@/utils/fheEncryption';
 
 // Contract ABI - This would be generated from the compiled contract
 const CONTRACT_ABI = [
@@ -274,6 +274,30 @@ const CONTRACT_ABI = [
     ],
     "stateMutability": "view",
     "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "externalEuint32",
+        "name": "studentId",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes",
+        "name": "inputProof",
+        "type": "bytes"
+      }
+    ],
+    "name": "registerStudent",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
   }
 ] as const;
 
@@ -416,9 +440,39 @@ export const useContract = () => {
     });
   };
 
+  const registerStudent = async (studentId: number) => {
+    if (!isConnected) throw new Error('Wallet not connected');
+    
+    console.log('开始学生注册，studentId:', studentId);
+    
+    // 初始化FHEVM
+    await initFHEVM();
+    
+    // 获取用户地址
+    const userAddress = address || '';
+    
+    // 加密学生ID
+    const encryptedStudentId = await encryptUint32(studentId, CONTRACT_ADDRESS, userAddress);
+    
+    console.log('FHE加密学生ID完成，准备调用钱包签名...');
+    console.log('加密学生ID:', encryptedStudentId);
+    
+    // 调用合约的registerStudent函数
+    return writeContract({
+      address: CONTRACT_ADDRESS as `0x${string}`,
+      abi: CONTRACT_ABI,
+      functionName: 'registerStudent',
+      args: [
+        encryptedStudentId.encrypted, // FHE加密的学生ID (bytes32)
+        encryptedStudentId.proof // FHE加密证明 (bytes)
+      ],
+    } as any);
+  };
+
   return {
     createExam,
     attemptExam,
+    registerStudent,
     getStudentInfo,
     getExamInfo,
     isPending,

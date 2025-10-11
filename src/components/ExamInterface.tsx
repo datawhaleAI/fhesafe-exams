@@ -34,6 +34,16 @@ const ExamInterface = () => {
       return;
     }
 
+    // 检查学生是否已注册
+    try {
+      // 这里可以添加检查学生注册状态的逻辑
+      console.log('检查学生注册状态...');
+    } catch (error) {
+      console.error('检查学生注册状态失败:', error);
+      toast.error('请先注册为学生才能参加考试。请访问 /register 页面进行注册。');
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       // Calculate score based on answers for all 3 questions

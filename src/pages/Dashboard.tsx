@@ -31,7 +31,7 @@ const Dashboard = () => {
             Please connect your wallet to access the dashboard.
           </p>
           <Button asChild>
-            <Link to="/">Connect Wallet</Link>
+            <Link to="/register">Connect Wallet & Register</Link>
           </Button>
         </Card>
       </div>
@@ -295,12 +295,12 @@ const Dashboard = () => {
                 </Link>
               </Button>
               
-              <Button asChild variant="outline" className="h-auto p-4">
-                <Link to="/platform" className="flex flex-col items-center gap-2">
-                  <User className="w-6 h-6" />
-                  <span>Settings</span>
-                </Link>
-              </Button>
+                     <Button asChild variant="outline" className="h-auto p-4">
+                       <Link to="/register" className="flex flex-col items-center gap-2">
+                         <User className="w-6 h-6" />
+                         <span>Register</span>
+                       </Link>
+                     </Button>
             </div>
           </Card>
         </div>

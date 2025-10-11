@@ -11,6 +11,7 @@ import Platform from "./pages/Platform";
 import Dashboard from "./pages/Dashboard";
 import ExamPage from "./pages/ExamPage";
 import DebugInfo from "./components/DebugInfo";
+import StudentRegistration from "./components/StudentRegistration";
 import NotFound from "./pages/NotFound";
 import '@rainbow-me/rainbowkit/styles.css';
 
@@ -29,6 +30,7 @@ const App = () => (
               <Route path="/platform" element={<Platform />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/exam" element={<ExamPage />} />
+              <Route path="/register" element={<StudentRegistration />} />
               <Route path="/debug" element={<DebugInfo />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

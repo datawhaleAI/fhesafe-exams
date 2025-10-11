@@ -196,7 +196,7 @@ This project is licensed under the **MIT License** - see the LICENSE file for de
 
 ## 🏆 **Acknowledgments**
 
-Built with ❤️ by the **DataWhale AI** team, focusing on core exam functionality with privacy-preserving technology.
+Built with 🔐 by the **DataWhale AI** team, focusing on core exam functionality with privacy-preserving technology.
 
 **Special thanks to:**
 * Zama team for FHEVM technology

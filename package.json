@@ -2,6 +2,7 @@
   "name": "fhesafe-exams",
   "private": true,
   "version": "1.0.0",
+  "description": "Core exam platform with Fully Homomorphic Encryption for secure online examinations",
   "type": "module",
   "scripts": {
     "dev": "vite",

@@ -239,6 +239,7 @@ contract FHESafeExams is SepoliaConfig {
         emit ExamCompleted(examId, isCompleted);
     }
     
+    
     function addInstructor(address instructor) public onlyOwner {
         require(instructor != address(0), "Invalid instructor address");
         instructorAddresses[instructor] = 1;

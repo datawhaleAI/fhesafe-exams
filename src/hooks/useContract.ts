@@ -1,5 +1,6 @@
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { useQuery } from '@tanstack/react-query';
+import { encryptExamScore, encryptExamTime, initFHEVM } from '@/utils/fheEncryption';
 
 // Contract ABI - This would be generated from the compiled contract
 const CONTRACT_ABI = [
@@ -135,14 +136,14 @@ const CONTRACT_ABI = [
         "type": "uint256"
       },
       {
-        "internalType": "uint32",
+        "internalType": "externalEuint32",
         "name": "score",
-        "type": "uint32"
+        "type": "bytes32"
       },
       {
-        "internalType": "uint32",
+        "internalType": "externalEuint32",
         "name": "timeSpent",
-        "type": "uint32"
+        "type": "bytes32"
       },
       {
         "internalType": "bytes",
@@ -299,8 +300,8 @@ export const useContract = () => {
       address: CONTRACT_ADDRESS as `0x${string}`,
       abi: CONTRACT_ABI,
       functionName: 'createExam',
-      args: [examName, examDescription, maxScore, passingScore, timeLimit, duration],
-    });
+      args: [examName, examDescription, BigInt(maxScore), BigInt(passingScore), BigInt(timeLimit), BigInt(duration)] as const,
+    } as any);
   };
 
   const attemptExam = async (
@@ -310,14 +311,91 @@ export const useContract = () => {
   ) => {
     if (!isConnected) throw new Error('Wallet not connected');
     
-    // For now, we'll use a simplified version without FHE encryption
-    // In a real implementation, you would need to encrypt the values
+    console.log('开始提交考试，examId:', examId, 'score:', score, 'timeSpent:', timeSpent);
+    
+    // 初始化FHEVM SDK
+    await initFHEVM();
+    
+    // 获取用户地址
+    const userAddress = address || '';
+    
+    // 加密分数和用时
+    console.log('开始FHE加密过程...');
+    console.log('- 原始分数:', score);
+    console.log('- 原始用时:', timeSpent);
+    console.log('- 合约地址:', CONTRACT_ADDRESS);
+    console.log('- 用户地址:', userAddress);
+    
+    const encryptedScore = await encryptExamScore(score, CONTRACT_ADDRESS, userAddress);
+    const encryptedTime = await encryptExamTime(timeSpent, CONTRACT_ADDRESS, userAddress);
+    
+    console.log('FHE加密完成，准备调用钱包签名...');
+    console.log('加密分数结果:', encryptedScore);
+    console.log('加密用时结果:', encryptedTime);
+    console.log('加密分数值:', encryptedScore.encrypted);
+    console.log('加密用时值:', encryptedTime.encrypted);
+    console.log('加密证明:', encryptedScore.proof);
+    
+    // 调用合约的attemptExam函数，传入FHE加密数据
+    const debugInfo = {
+      timestamp: new Date().toISOString(),
+      examId: examId,
+      score: score,
+      timeSpent: timeSpent,
+      encryptedScore: encryptedScore.encrypted,
+      encryptedTime: encryptedTime.encrypted,
+      proof: encryptedScore.proof,
+      contractAddress: CONTRACT_ADDRESS,
+      userAddress: address
+    };
+    
+    console.log('准备调用合约，参数:', debugInfo);
+    
+    // 保存调试信息到localStorage
+    localStorage.setItem('fhe-debug-info', JSON.stringify(debugInfo, null, 2));
+    
+    // 验证参数格式
+    console.log('参数格式验证:');
+    console.log('- examId类型:', typeof examId, '值:', examId);
+    console.log('- encryptedScore类型:', typeof encryptedScore.encrypted, '值:', encryptedScore.encrypted);
+    console.log('- encryptedTime类型:', typeof encryptedTime.encrypted, '值:', encryptedTime.encrypted);
+    console.log('- proof类型:', typeof encryptedScore.proof, '值:', encryptedScore.proof);
+    
+    // 确保参数格式正确 - 验证FHE加密数据
+    console.log('验证FHE加密数据:');
+    console.log('- 分数加密值:', encryptedScore.encrypted);
+    console.log('- 用时加密值:', encryptedTime.encrypted);
+    console.log('- 加密证明:', encryptedScore.proof);
+    
+    // 检查加密数据是否为零
+    if (encryptedScore.encrypted === '0x0000000000000000000000000000000000000000000000000000000000000000') {
+      console.error('错误: 分数加密结果为全零！');
+      throw new Error('FHE加密失败: 分数加密结果为全零');
+    }
+    
+    if (encryptedTime.encrypted === '0x0000000000000000000000000000000000000000000000000000000000000000') {
+      console.error('错误: 用时加密结果为全零！');
+      throw new Error('FHE加密失败: 用时加密结果为全零');
+    }
+    
+    const args = [
+      BigInt(examId), 
+      encryptedScore.encrypted, // FHE加密的分数 (bytes32)
+      encryptedTime.encrypted, // FHE加密的用时 (bytes32)
+      encryptedScore.proof // FHE加密证明 (bytes)
+    ];
+    
+    console.log('最终参数:', args);
+    
+    // 保存最终参数到localStorage
+    localStorage.setItem('fhe-final-args', JSON.stringify(args.map(arg => arg.toString())));
+    
     return writeContract({
       address: CONTRACT_ADDRESS as `0x${string}`,
       abi: CONTRACT_ABI,
       functionName: 'attemptExam',
-      args: [BigInt(examId), score, timeSpent, "0x"], // Simplified without FHE
-    });
+      args: args,
+    } as any);
   };
 
   const getStudentInfo = (studentId: number) => {
@@ -368,7 +446,7 @@ export const useStudentRegistration = () => {
       abi: CONTRACT_ABI,
       functionName: 'registerStudent',
       args: [BigInt(studentId)],
-    });
+    } as any);
   };
 
   return {

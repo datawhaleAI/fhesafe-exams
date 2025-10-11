@@ -14,11 +14,12 @@ import {
   TrendingUp
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useExamData } from '@/hooks/useExamData';
+import { useExamData, useAllExams } from '@/hooks/useExamData';
 
 const Dashboard = () => {
   const { address, isConnected } = useAccount();
   const { examCounter, studentCounter, attemptCounter, certificateCounter } = useExamData();
+  const { exams, totalExams, isLoading: examsLoading } = useAllExams();
 
   if (!isConnected) {
     return (
@@ -125,49 +126,111 @@ const Dashboard = () => {
               
               <div className="space-y-4">
                 <div className="text-center py-4">
-                  <p className="text-muted-foreground mb-2">Total Exams Available: {examCounter}</p>
+                  <p className="text-muted-foreground mb-2">Total Exams Available: {totalExams}</p>
                   <p className="text-sm text-muted-foreground">
                     Connect to Sepolia network to view and take exams
                   </p>
                 </div>
                 
-                <div className="border border-border rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold">Blockchain Fundamentals</h4>
-                    <Badge variant="secondary">100 Points</Badge>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Comprehensive exam covering blockchain technology, smart contracts, and decentralized applications.
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Clock className="w-4 h-4" />
-                      <span>2 months remaining</span>
+                {/* 显示预定义的考试列表，基于考试数量 */}
+                {totalExams > 0 && (
+                  <>
+                    <div className="border border-border rounded-lg p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-semibold">Blockchain Fundamentals</h4>
+                        <Badge variant="secondary">100 Points</Badge>
+                      </div>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Comprehensive exam covering blockchain technology, smart contracts, and decentralized applications.
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <Clock className="w-4 h-4" />
+                          <span>2 months remaining</span>
+                        </div>
+                        <Button asChild size="sm">
+                          <Link to="/exam?examId=0">Start Exam</Link>
+                        </Button>
+                      </div>
                     </div>
-                    <Button asChild size="sm">
-                      <Link to="/exam">Start Exam</Link>
-                    </Button>
-                  </div>
-                </div>
-                
-                <div className="border border-border rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold">FHE Mathematics</h4>
-                    <Badge variant="secondary">100 Points</Badge>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Advanced mathematics and cryptography for Fully Homomorphic Encryption systems.
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Clock className="w-4 h-4" />
-                      <span>2 months remaining</span>
+
+                    <div className="border border-border rounded-lg p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-semibold">FHE Mathematics</h4>
+                        <Badge variant="secondary">100 Points</Badge>
+                      </div>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Advanced mathematics and cryptography for Fully Homomorphic Encryption systems.
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <Clock className="w-4 h-4" />
+                          <span>2 months remaining</span>
+                        </div>
+                        <Button asChild size="sm">
+                          <Link to="/exam?examId=1">Start Exam</Link>
+                        </Button>
+                      </div>
                     </div>
-                    <Button asChild size="sm" variant="outline">
-                      <Link to="/exam">Start Exam</Link>
-                    </Button>
-                  </div>
-                </div>
+
+                    <div className="border border-border rounded-lg p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-semibold">Smart Contract Security</h4>
+                        <Badge variant="secondary">100 Points</Badge>
+                      </div>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Security best practices, vulnerability assessment, and secure coding for smart contracts.
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <Clock className="w-4 h-4" />
+                          <span>2 months remaining</span>
+                        </div>
+                        <Button asChild size="sm">
+                          <Link to="/exam?examId=2">Start Exam</Link>
+                        </Button>
+                      </div>
+                    </div>
+
+                    <div className="border border-border rounded-lg p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-semibold">Web3 Development</h4>
+                        <Badge variant="secondary">100 Points</Badge>
+                      </div>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Frontend and backend development for Web3 applications using modern frameworks.
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <Clock className="w-4 h-4" />
+                          <span>2 months remaining</span>
+                        </div>
+                        <Button asChild size="sm">
+                          <Link to="/exam?examId=3">Start Exam</Link>
+                        </Button>
+                      </div>
+                    </div>
+
+                    <div className="border border-border rounded-lg p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-semibold">Decentralized Systems</h4>
+                        <Badge variant="secondary">100 Points</Badge>
+                      </div>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Distributed systems, consensus mechanisms, and peer-to-peer networking.
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <Clock className="w-4 h-4" />
+                          <span>2 months remaining</span>
+                        </div>
+                        <Button asChild size="sm">
+                          <Link to="/exam?examId=4">Start Exam</Link>
+                        </Button>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             </Card>
 

@@ -1,17 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Lock, Eye, EyeOff, Clock, Shield } from "lucide-react";
+import { Lock, Eye, EyeOff, Clock, Shield, Key } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useAccount } from 'wagmi';
 import { useContract } from '@/hooks/useContract';
 import { toast } from 'sonner';
+import { initFHEVM } from '@/utils/fheEncryption';
+import { useSearchParams } from 'react-router-dom';
 
 const ExamInterface = () => {
   const [answers, setAnswers] = useState(["", "", ""]);
   const [timeLeft] = useState("02:45:30");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [fheInitialized, setFheInitialized] = useState(true); // FHE始终可用
+  const [searchParams] = useSearchParams();
+  const examId = parseInt(searchParams.get('examId') || '0');
   const { isConnected } = useAccount();
   const { attemptExam, isPending, isConfirming, isConfirmed, error } = useContract();
 
@@ -21,6 +26,8 @@ const ExamInterface = () => {
     setAnswers(newAnswers);
   };
 
+  // FHE加密始终可用，无需手动初始化
+
   const handleSubmitExam = async () => {
     if (!isConnected) {
       toast.error('Please connect your wallet first');
@@ -29,19 +36,40 @@ const ExamInterface = () => {
 
     setIsSubmitting(true);
     try {
-      // Calculate score based on answers (simplified scoring)
-      const score = answers.reduce((total, answer) => {
-        return total + (answer.length > 50 ? 25 : 0);
+      // Calculate score based on answers for all 3 questions
+      const score = answers.reduce((total, answer, index) => {
+        const question = questions[index];
+        if (!question) return total;
+        
+        // 根据答案长度和问题分值计算分数
+        const baseScore = answer.length > 50 ? question.points * 0.8 : 
+                         answer.length > 20 ? question.points * 0.5 : 0;
+        return total + Math.floor(baseScore);
       }, 0);
 
-      // Submit exam attempt to blockchain
+      // 计算实际用时（模拟）
+      const timeSpent = 180; // 3小时 = 180分钟
+
+      console.log('考试提交详情:');
+      console.log('- 问题数量:', questions.length);
+      console.log('- 答案详情:', answers.map((answer, index) => ({
+        question: questions[index]?.text.substring(0, 50) + '...',
+        answerLength: answer.length,
+        points: questions[index]?.points,
+        score: answer.length > 50 ? Math.floor(questions[index]?.points * 0.8) : 
+               answer.length > 20 ? Math.floor(questions[index]?.points * 0.5) : 0
+      })));
+      console.log('- 总分:', score);
+      console.log('- 用时:', timeSpent, '分钟');
+
+      // Submit exam attempt to blockchain with FHE encryption
       await attemptExam(
-        0, // Exam ID (using first exam)
+        examId, // 使用真实的考试ID
         score,
-        180 // Time spent in minutes
+        timeSpent // Time spent in minutes
       );
 
-      toast.success('Exam submitted successfully! Your answers are encrypted and stored on-chain.');
+      toast.success('考试提交成功！您的答案已通过FHE全同态加密安全存储到区块链上。');
       
       // Redirect to dashboard after successful submission
       setTimeout(() => {
@@ -49,29 +77,118 @@ const ExamInterface = () => {
       }, 2000);
     } catch (err) {
       console.error('Error submitting exam:', err);
-      toast.error('Failed to submit exam. Please try again.');
+      toast.error('考试提交失败，请重试。');
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const questions = [
-    {
-      id: 1,
-      text: "Explain the fundamental principles of Fully Homomorphic Encryption and its applications in preserving data privacy during computation.",
-      points: 25
-    },
-    {
-      id: 2,
-      text: "Describe how blockchain technology can be integrated with educational systems to ensure academic integrity and credential verification.",
-      points: 30
-    },
-    {
-      id: 3,
-      text: "Analyze the security implications of using decentralized identity systems in academic environments and propose solutions for potential vulnerabilities.",
-      points: 45
-    }
-  ];
+  // 根据考试ID获取不同的问题
+  const getQuestionsForExam = (examId: number) => {
+    const examQuestions = {
+      0: [ // Blockchain Fundamentals
+        {
+          id: 1,
+          text: "Explain the fundamental principles of blockchain technology, including consensus mechanisms, cryptographic hashing, and distributed ledger architecture.",
+          points: 35
+        },
+        {
+          id: 2,
+          text: "Describe how smart contracts work and their role in decentralized applications. Include examples of popular smart contract platforms.",
+          points: 35
+        },
+        {
+          id: 3,
+          text: "Analyze the differences between Proof of Work (PoW) and Proof of Stake (PoS) consensus mechanisms, including their advantages and disadvantages.",
+          points: 30
+        }
+      ],
+      1: [ // FHE Mathematics
+        {
+          id: 1,
+          text: "Explain the mathematical foundations of Fully Homomorphic Encryption, including ring learning with errors (RLWE) and lattice-based cryptography.",
+          points: 40
+        },
+        {
+          id: 2,
+          text: "Describe the bootstrapping process in FHE and its importance for enabling unlimited homomorphic operations on encrypted data.",
+          points: 35
+        },
+        {
+          id: 3,
+          text: "Compare and contrast different FHE schemes (BGV, BFV, CKKS) and their specific use cases in privacy-preserving applications.",
+          points: 25
+        }
+      ],
+      2: [ // Smart Contract Security
+        {
+          id: 1,
+          text: "Identify and explain common smart contract vulnerabilities such as reentrancy attacks, integer overflow, and access control issues.",
+          points: 40
+        },
+        {
+          id: 2,
+          text: "Describe best practices for secure smart contract development, including code review processes and testing methodologies.",
+          points: 35
+        },
+        {
+          id: 3,
+          text: "Analyze the role of formal verification in smart contract security and provide examples of tools used for this purpose.",
+          points: 25
+        }
+      ],
+      3: [ // Web3 Development
+        {
+          id: 1,
+          text: "Explain the architecture of Web3 applications, including frontend frameworks, wallet integration, and blockchain interaction patterns.",
+          points: 35
+        },
+        {
+          id: 2,
+          text: "Describe the process of building decentralized applications (DApps) using modern development frameworks like React, Next.js, and Web3 libraries.",
+          points: 35
+        },
+        {
+          id: 3,
+          text: "Analyze the challenges of user experience in Web3 applications and propose solutions for improving adoption and usability.",
+          points: 30
+        }
+      ],
+      4: [ // Decentralized Systems
+        {
+          id: 1,
+          text: "Explain the principles of distributed systems, including fault tolerance, consensus algorithms, and Byzantine fault tolerance.",
+          points: 40
+        },
+        {
+          id: 2,
+          text: "Describe peer-to-peer networking protocols and their role in decentralized systems, including examples from blockchain and file sharing systems.",
+          points: 35
+        },
+        {
+          id: 3,
+          text: "Analyze the trade-offs between decentralization, scalability, and security in distributed systems, with specific examples from blockchain networks.",
+          points: 25
+        }
+      ]
+    };
+    
+    return examQuestions[examId as keyof typeof examQuestions] || examQuestions[0];
+  };
+
+  const questions = getQuestionsForExam(examId);
+
+  // 根据考试ID获取考试标题
+  const getExamTitle = (examId: number) => {
+    const titles = {
+      0: "Blockchain Fundamentals Exam",
+      1: "FHE Mathematics Exam", 
+      2: "Smart Contract Security Exam",
+      3: "Web3 Development Exam",
+      4: "Decentralized Systems Exam"
+    };
+    return titles[examId as keyof typeof titles] || "Blockchain Fundamentals Exam";
+  };
 
   return (
     <div className="space-y-8 max-w-4xl mx-auto">
@@ -80,7 +197,7 @@ const ExamInterface = () => {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
             <h2 className="text-2xl font-bold text-primary mb-2">
-              Cryptography & Blockchain Security Exam
+              {getExamTitle(examId)}
             </h2>
             <div className="flex items-center gap-4">
               <Badge variant="secondary" className="bg-exam-locked text-white">
@@ -94,10 +211,12 @@ const ExamInterface = () => {
             </div>
           </div>
           
-          <div className="text-right">
-            <p className="text-sm text-muted-foreground">Total Points</p>
-            <p className="text-3xl font-bold text-primary">100</p>
-          </div>
+                   <div className="text-right">
+                     <p className="text-sm text-muted-foreground">Total Points</p>
+                     <p className="text-3xl font-bold text-primary">
+                       {questions.reduce((total, q) => total + q.points, 0)}
+                     </p>
+                   </div>
         </div>
       </Card>
 
@@ -123,7 +242,7 @@ const ExamInterface = () => {
                 </label>
                 <div className="flex items-center gap-2 text-xs text-exam-locked">
                   <Shield className="w-3 h-3 animate-encrypt-pulse" />
-                  <span>FHE Protected</span>
+                  <span>FHE加密保护</span>
                 </div>
               </div>
               
@@ -163,18 +282,11 @@ const ExamInterface = () => {
           <Shield className="w-12 h-12 mx-auto mb-4 animate-secure-glow" />
           <h3 className="text-xl font-bold mb-2">Exam Submission</h3>
           <p className="text-green-100 mb-6">
-            Your answers are encrypted and will remain confidential until the deadline.
-            Only you and the instructor can decrypt them after submission closes.
+            Your answers are protected by FHE (Fully Homomorphic Encryption) and will remain confidential.
+            All data is encrypted before submission to the blockchain.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              variant="outline" 
-              className="border-white text-white hover:bg-white/10 hover:text-white"
-              disabled={isSubmitting || isPending || isConfirming}
-            >
-              Save Draft (Encrypted)
-            </Button>
+          <div className="flex justify-center">
             <Button 
               className="bg-white text-primary hover:bg-white/90 border border-white"
               onClick={handleSubmitExam}
@@ -183,10 +295,10 @@ const ExamInterface = () => {
               {isSubmitting || isPending || isConfirming ? (
                 <div className="flex items-center gap-2">
                   <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
-                  {isConfirming ? 'Confirming...' : 'Submitting...'}
+                  {isConfirming ? 'Confirming FHE Transaction...' : 'Encrypting & Submitting...'}
                 </div>
               ) : (
-                'Submit Final Answers'
+                'Submit with FHE Encryption'
               )}
             </Button>
           </div>

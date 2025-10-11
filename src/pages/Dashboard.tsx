@@ -14,9 +14,12 @@ import {
   TrendingUp
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useExamData, useAllExams } from '@/hooks/useExamData';
 
 const Dashboard = () => {
   const { address, isConnected } = useAccount();
+  const { examCounter, studentCounter, attemptCounter, certificateCounter } = useExamData();
+  const { exams, totalExams, isLoading } = useAllExams();
 
   if (!isConnected) {
     return (
@@ -75,8 +78,8 @@ const Dashboard = () => {
               <div className="flex items-center gap-3">
                 <BookOpen className="w-8 h-8 text-blue-500" />
                 <div>
-                  <p className="text-2xl font-bold">3</p>
-                  <p className="text-sm text-muted-foreground">Active Exams</p>
+                  <p className="text-2xl font-bold">{examCounter}</p>
+                  <p className="text-sm text-muted-foreground">Total Exams</p>
                 </div>
               </div>
             </Card>
@@ -85,8 +88,8 @@ const Dashboard = () => {
               <div className="flex items-center gap-3">
                 <CheckCircle className="w-8 h-8 text-green-500" />
                 <div>
-                  <p className="text-2xl font-bold">12</p>
-                  <p className="text-sm text-muted-foreground">Completed</p>
+                  <p className="text-2xl font-bold">{attemptCounter}</p>
+                  <p className="text-sm text-muted-foreground">Attempts</p>
                 </div>
               </div>
             </Card>
@@ -95,7 +98,7 @@ const Dashboard = () => {
               <div className="flex items-center gap-3">
                 <Award className="w-8 h-8 text-yellow-500" />
                 <div>
-                  <p className="text-2xl font-bold">8</p>
+                  <p className="text-2xl font-bold">{certificateCounter}</p>
                   <p className="text-sm text-muted-foreground">Certificates</p>
                 </div>
               </div>
@@ -103,10 +106,10 @@ const Dashboard = () => {
             
             <Card className="p-6">
               <div className="flex items-center gap-3">
-                <TrendingUp className="w-8 h-8 text-purple-500" />
+                <User className="w-8 h-8 text-purple-500" />
                 <div>
-                  <p className="text-2xl font-bold">87%</p>
-                  <p className="text-sm text-muted-foreground">Average Score</p>
+                  <p className="text-2xl font-bold">{studentCounter}</p>
+                  <p className="text-sm text-muted-foreground">Students</p>
                 </div>
               </div>
             </Card>
@@ -122,43 +125,49 @@ const Dashboard = () => {
               </div>
               
               <div className="space-y-4">
-                <div className="border border-border rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold">Cryptography & Blockchain Security</h4>
-                    <Badge variant="secondary">100 Points</Badge>
+                {isLoading ? (
+                  <div className="text-center py-4">
+                    <p className="text-muted-foreground">Loading exams...</p>
                   </div>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Final exam covering FHE and blockchain security concepts
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Clock className="w-4 h-4" />
-                      <span>3 hours remaining</span>
-                    </div>
-                    <Button asChild size="sm">
-                      <Link to="/exam">Start Exam</Link>
-                    </Button>
+                ) : exams.length === 0 ? (
+                  <div className="text-center py-4">
+                    <p className="text-muted-foreground">No exams available</p>
                   </div>
-                </div>
-                
-                <div className="border border-border rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold">Advanced FHE Applications</h4>
-                    <Badge variant="secondary">75 Points</Badge>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Practical applications of fully homomorphic encryption
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Clock className="w-4 h-4" />
-                      <span>2 days remaining</span>
-                    </div>
-                    <Button asChild size="sm" variant="outline">
-                      <Link to="/exam">Start Exam</Link>
-                    </Button>
-                  </div>
-                </div>
+                ) : (
+                  exams.map((exam) => {
+                    const now = Math.floor(Date.now() / 1000);
+                    const timeRemaining = exam.endTime - now;
+                    const isExpired = timeRemaining <= 0;
+                    const hoursRemaining = Math.floor(timeRemaining / 3600);
+                    const daysRemaining = Math.floor(hoursRemaining / 24);
+                    
+                    return (
+                      <div key={exam.id} className="border border-border rounded-lg p-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="font-semibold">{exam.examName}</h4>
+                          <Badge variant="secondary">{exam.maxScore} Points</Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground mb-3">
+                          {exam.examDescription}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <Clock className="w-4 h-4" />
+                            <span>
+                              {isExpired ? 'Expired' : 
+                               daysRemaining > 0 ? `${daysRemaining} days remaining` :
+                               hoursRemaining > 0 ? `${hoursRemaining} hours remaining` :
+                               'Less than 1 hour remaining'}
+                            </span>
+                          </div>
+                          <Button asChild size="sm" disabled={isExpired}>
+                            <Link to="/exam">Start Exam</Link>
+                          </Button>
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
               </div>
             </Card>
 
@@ -166,31 +175,39 @@ const Dashboard = () => {
             <Card className="p-6">
               <div className="flex items-center gap-3 mb-6">
                 <Calendar className="w-6 h-6 text-primary" />
-                <h3 className="text-xl font-semibold">Recent Activity</h3>
+                <h3 className="text-xl font-semibold">System Status</h3>
               </div>
               
               <div className="space-y-4">
-                <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
-                  <CheckCircle className="w-5 h-5 text-green-500" />
+                <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
+                  <BookOpen className="w-5 h-5 text-blue-500" />
                   <div className="flex-1">
-                    <p className="text-sm font-medium">Completed: Web3 Security Fundamentals</p>
-                    <p className="text-xs text-muted-foreground">2 hours ago • Score: 92/100</p>
+                    <p className="text-sm font-medium">Total Exams Available</p>
+                    <p className="text-xs text-muted-foreground">{examCounter} exams created</p>
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
-                  <Award className="w-5 h-5 text-blue-500" />
+                <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
+                  <CheckCircle className="w-5 h-5 text-green-500" />
                   <div className="flex-1">
-                    <p className="text-sm font-medium">Certificate Issued: Blockchain Developer</p>
-                    <p className="text-xs text-muted-foreground">1 day ago</p>
+                    <p className="text-sm font-medium">Total Attempts</p>
+                    <p className="text-xs text-muted-foreground">{attemptCounter} exam attempts</p>
                   </div>
                 </div>
                 
                 <div className="flex items-center gap-3 p-3 bg-yellow-50 rounded-lg">
-                  <Clock className="w-5 h-5 text-yellow-500" />
+                  <Award className="w-5 h-5 text-yellow-500" />
                   <div className="flex-1">
-                    <p className="text-sm font-medium">Started: Smart Contract Security</p>
-                    <p className="text-xs text-muted-foreground">3 days ago • In Progress</p>
+                    <p className="text-sm font-medium">Certificates Issued</p>
+                    <p className="text-xs text-muted-foreground">{certificateCounter} certificates</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-3 p-3 bg-purple-50 rounded-lg">
+                  <User className="w-5 h-5 text-purple-500" />
+                  <div className="flex-1">
+                    <p className="text-sm font-medium">Registered Students</p>
+                    <p className="text-xs text-muted-foreground">{studentCounter} students</p>
                   </div>
                 </div>
               </div>

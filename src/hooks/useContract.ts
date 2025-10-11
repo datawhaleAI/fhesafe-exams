@@ -376,19 +376,19 @@ export const useContract = () => {
     } as any);
   };
 
-  const attemptExam = async (
+  const submitExam = async (
     examId: number,
     score: number,
     timeSpent: number
   ) => {
     if (!isConnected) throw new Error('Wallet not connected');
     
-    console.log('🚀 Starting exam submission with FINAL SOLUTION');
+    console.log('🚀 Starting exam submission with NEW FUNCTION');
     console.log('📊 Parameters:', { examId, score, timeSpent });
     console.log('📍 Contract address:', CONTRACT_ADDRESS);
     
-    // FINAL SOLUTION - use a completely different approach
-    console.log('🔄 Using FINAL SOLUTION approach');
+    // NEW FUNCTION - use a completely different approach
+    console.log('🔄 Using NEW FUNCTION approach');
     
     // Create a completely isolated ABI with a different approach
     const isolatedABI = [
@@ -408,9 +408,9 @@ export const useContract = () => {
     console.log('🔧 Using isolated ABI for attemptExamTest');
     console.log('📋 ABI:', JSON.stringify(isolatedABI, null, 2));
     
-    // FINAL SOLUTION - use a completely different approach
+    // NEW FUNCTION - use a completely different approach
     try {
-      console.log('⚡ Calling writeContract with FINAL SOLUTION');
+      console.log('⚡ Calling writeContract with NEW FUNCTION');
       
       const result = await writeContract({
         address: CONTRACT_ADDRESS as `0x${string}`,
@@ -496,7 +496,7 @@ export const useContract = () => {
 
   return {
     createExam,
-    attemptExam,
+    submitExam,
     registerStudent,
     getStudentInfo,
     getExamInfo,

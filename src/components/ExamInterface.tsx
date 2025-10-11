@@ -18,7 +18,7 @@ const ExamInterface = () => {
   const [searchParams] = useSearchParams();
   const examId = parseInt(searchParams.get('examId') || '0');
   const { isConnected } = useAccount();
-  const { attemptExam, isPending, isConfirming, isConfirmed, error } = useContract();
+  const { submitExam, isPending, isConfirming, isConfirmed, error } = useContract();
 
   const updateAnswer = (index: number, value: string) => {
     const newAnswers = [...answers];
@@ -73,7 +73,7 @@ const ExamInterface = () => {
       console.log('- Time spent:', timeSpent, 'minutes');
 
       // Submit exam attempt to blockchain with FHE encryption
-      await attemptExam(
+      await submitExam(
         examId, // Use real exam ID
         score,
         timeSpent // Time spent in minutes

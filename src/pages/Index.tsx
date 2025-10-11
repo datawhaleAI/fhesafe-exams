@@ -53,7 +53,7 @@ const Index = () => {
                 size="lg"
                 className="border-white/30 text-white hover:bg-white/10 px-8 py-6 text-lg backdrop-blur-sm transition-all duration-300"
               >
-                <Link to="/learn">Learn About FHE</Link>
+                <Link to="/platform">Connect Wallet</Link>
               </Button>
             </div>
           </div>
@@ -198,9 +198,9 @@ const Index = () => {
               size="lg"
               className="border-white text-white hover:bg-white/10 px-8 py-6 text-lg"
             >
-              <Link to="/learn" className="flex items-center gap-2">
+              <Link to="/platform" className="flex items-center gap-2">
                 <BookOpen className="w-5 h-5" />
-                Learn More
+                Get Started
               </Link>
             </Button>
           </div>

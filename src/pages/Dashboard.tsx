@@ -209,16 +209,16 @@ const Dashboard = () => {
               </Button>
               
               <Button asChild variant="outline" className="h-auto p-4">
-                <Link to="/certificates" className="flex flex-col items-center gap-2">
+                <Link to="/exam" className="flex flex-col items-center gap-2">
                   <Award className="w-6 h-6" />
-                  <span>View Certificates</span>
+                  <span>View Results</span>
                 </Link>
               </Button>
               
               <Button asChild variant="outline" className="h-auto p-4">
-                <Link to="/profile" className="flex flex-col items-center gap-2">
+                <Link to="/platform" className="flex flex-col items-center gap-2">
                   <User className="w-6 h-6" />
-                  <span>Update Profile</span>
+                  <span>Settings</span>
                 </Link>
               </Button>
             </div>

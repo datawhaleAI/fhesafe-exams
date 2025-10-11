@@ -393,7 +393,7 @@ export const useContract = () => {
     console.log('Contract address:', CONTRACT_ADDRESS);
     console.log('Parameters:', { examId, score, timeSpent });
     
-    // Create a completely isolated ABI
+    // Create a completely isolated ABI with a different approach
     const isolatedABI = [
       {
         "inputs": [
@@ -411,12 +411,17 @@ export const useContract = () => {
     console.log('Using isolated ABI for attemptExamTest');
     console.log('ABI:', JSON.stringify(isolatedABI, null, 2));
     
+    // Force a new writeContract call with explicit configuration
     try {
       const result = await writeContract({
         address: CONTRACT_ADDRESS as `0x${string}`,
         abi: isolatedABI,
         functionName: 'attemptExamTest',
         args: [BigInt(examId), BigInt(score), BigInt(timeSpent)],
+        query: {
+          enabled: true,
+          staleTime: 0,
+        },
       } as any);
       
       console.log('Write contract result:', result);

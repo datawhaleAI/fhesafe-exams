@@ -388,11 +388,24 @@ export const useContract = () => {
     // Use the test function for now to bypass FHE validation
     console.log('Using test function to bypass FHE validation');
     
+    // Call the test function directly with explicit ABI
     return writeContract({
       address: CONTRACT_ADDRESS as `0x${string}`,
-      abi: CONTRACT_ABI,
+      abi: [
+        {
+          "inputs": [
+            {"internalType": "uint256", "name": "examId", "type": "uint256"},
+            {"internalType": "uint256", "name": "score", "type": "uint256"},
+            {"internalType": "uint256", "name": "timeSpent", "type": "uint256"}
+          ],
+          "name": "attemptExamTest",
+          "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        }
+      ] as const,
       functionName: 'attemptExamTest',
-      args: [BigInt(examId), BigInt(score), BigInt(timeSpent)], // Simple uint256 parameters
+      args: [BigInt(examId), BigInt(score), BigInt(timeSpent)],
     } as any);
   };
 

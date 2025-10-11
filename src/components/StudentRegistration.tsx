@@ -21,18 +21,23 @@ const StudentRegistration = () => {
 
     setIsRegistering(true);
     try {
-      // 使用钱包地址生成一个简单的学生ID
-      // 取地址的最后4位数字作为学生ID
+      // Generate a simple student ID from wallet address
+      // Take the last 4 characters of the address as student ID
       const addressSuffix = address?.slice(-4) || '0000';
-      const studentId = parseInt(addressSuffix, 16); // 将16进制转换为数字
+      let studentId = parseInt(addressSuffix, 16); // Convert hex to number
       
-      console.log('使用钱包地址生成学生ID:', studentId, 'from address:', address);
+      // Ensure student ID is not zero (FHE encryption issue with zero values)
+      if (studentId === 0) {
+        studentId = 1; // Use 1 as default for zero addresses
+      }
+      
+      console.log('Generating student ID from wallet address:', studentId, 'from address:', address);
       
       await registerStudent(studentId);
-      toast.success('学生注册成功！您现在可以参加考试了。');
+      toast.success('Student registration successful! You can now take exams.');
     } catch (err) {
       console.error('Error registering student:', err);
-      toast.error('学生注册失败，请重试。');
+      toast.error('Student registration failed, please try again.');
     } finally {
       setIsRegistering(false);
     }

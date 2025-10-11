@@ -132,7 +132,7 @@ const Dashboard = () => {
                   </p>
                 </div>
                 
-                {/* 显示预定义的考试列表，基于考试数量 */}
+                {/* Display predefined exam list based on exam count */}
                 {totalExams > 0 && (
                   <>
                     <div className="border border-border rounded-lg p-4">

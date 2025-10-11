@@ -26,7 +26,7 @@ const ExamInterface = () => {
     setAnswers(newAnswers);
   };
 
-  // FHE加密始终可用，无需手动初始化
+  // FHE encryption is always available, no manual initialization needed
 
   const handleSubmitExam = async () => {
     if (!isConnected) {
@@ -34,13 +34,13 @@ const ExamInterface = () => {
       return;
     }
 
-    // 检查学生是否已注册
+    // Check if student is registered
     try {
-      // 这里可以添加检查学生注册状态的逻辑
-      console.log('检查学生注册状态...');
+      // Here we can add logic to check student registration status
+      console.log('Checking student registration status...');
     } catch (error) {
-      console.error('检查学生注册状态失败:', error);
-      toast.error('请先注册为学生才能参加考试。请访问 /register 页面进行注册。');
+      console.error('Failed to check student registration status:', error);
+      toast.error('Please register as a student first to take exams. Visit /register page to register.');
       return;
     }
 
@@ -51,35 +51,35 @@ const ExamInterface = () => {
         const question = questions[index];
         if (!question) return total;
         
-        // 根据答案长度和问题分值计算分数
+        // Calculate score based on answer length and question points
         const baseScore = answer.length > 50 ? question.points * 0.8 : 
                          answer.length > 20 ? question.points * 0.5 : 0;
         return total + Math.floor(baseScore);
       }, 0);
 
-      // 计算实际用时（模拟）
-      const timeSpent = 180; // 3小时 = 180分钟
+      // Calculate actual time spent (simulated)
+      const timeSpent = 180; // 3 hours = 180 minutes
 
-      console.log('考试提交详情:');
-      console.log('- 问题数量:', questions.length);
-      console.log('- 答案详情:', answers.map((answer, index) => ({
+      console.log('Exam submission details:');
+      console.log('- Number of questions:', questions.length);
+      console.log('- Answer details:', answers.map((answer, index) => ({
         question: questions[index]?.text.substring(0, 50) + '...',
         answerLength: answer.length,
         points: questions[index]?.points,
         score: answer.length > 50 ? Math.floor(questions[index]?.points * 0.8) : 
                answer.length > 20 ? Math.floor(questions[index]?.points * 0.5) : 0
       })));
-      console.log('- 总分:', score);
-      console.log('- 用时:', timeSpent, '分钟');
+      console.log('- Total score:', score);
+      console.log('- Time spent:', timeSpent, 'minutes');
 
       // Submit exam attempt to blockchain with FHE encryption
       await attemptExam(
-        examId, // 使用真实的考试ID
+        examId, // Use real exam ID
         score,
         timeSpent // Time spent in minutes
       );
 
-      toast.success('考试提交成功！您的答案已通过FHE全同态加密安全存储到区块链上。');
+      toast.success('Exam submitted successfully! Your answers have been securely stored on the blockchain with FHE encryption.');
       
       // Redirect to dashboard after successful submission
       setTimeout(() => {
@@ -87,13 +87,13 @@ const ExamInterface = () => {
       }, 2000);
     } catch (err) {
       console.error('Error submitting exam:', err);
-      toast.error('考试提交失败，请重试。');
+      toast.error('Exam submission failed, please try again.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // 根据考试ID获取不同的问题
+  // Get different questions based on exam ID
   const getQuestionsForExam = (examId: number) => {
     const examQuestions = {
       0: [ // Blockchain Fundamentals

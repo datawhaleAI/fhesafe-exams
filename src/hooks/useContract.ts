@@ -483,32 +483,3 @@ export const useContract = () => {
   };
 };
 
-export const useStudentRegistration = () => {
-  const { address, isConnected } = useAccount();
-  const { writeContract, data: hash, isPending, error } = useWriteContract();
-  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
-    hash,
-  });
-
-  const registerStudent = async (studentId: number) => {
-    if (!isConnected) throw new Error('Wallet not connected');
-    
-    // Note: In a real implementation, this would use FHE encryption
-    // For now, we'll simulate the registration
-    return writeContract({
-      address: CONTRACT_ADDRESS as `0x${string}`,
-      abi: CONTRACT_ABI,
-      functionName: 'registerStudent',
-      args: [BigInt(studentId)],
-    } as any);
-  };
-
-  return {
-    registerStudent,
-    isPending,
-    isConfirming,
-    isConfirmed,
-    error,
-    hash,
-  };
-};

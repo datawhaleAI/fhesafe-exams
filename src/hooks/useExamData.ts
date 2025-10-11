@@ -89,16 +89,16 @@ export const useExamData = () => {
   };
 };
 
-// 获取所有考试信息的hook - 修复Hooks规则违反
+// Hook to get all exam information - Fixed Hooks rule violation
 export const useAllExams = () => {
   const { examCounter } = useExamData();
   
-  // 由于React Hooks规则，我们不能在循环中动态创建hooks
-  // 这里返回一个简化的实现，只显示考试数量
-  // 在实际应用中，应该使用其他方法如useEffect + useState来获取数据
+  // Due to React Hooks rules, we cannot dynamically create hooks in loops
+  // Here we return a simplified implementation that only shows exam count
+  // In real applications, other methods like useEffect + useState should be used to fetch data
   
   return {
-    exams: [], // 暂时返回空数组，避免hooks规则违反
+    exams: [], // Temporarily return empty array to avoid hooks rule violation
     totalExams: examCounter || 0,
     isLoading: false,
     error: null

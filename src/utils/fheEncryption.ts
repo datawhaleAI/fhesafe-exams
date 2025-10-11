@@ -22,9 +22,11 @@ export const initFHEVM = async () => {
       add32: (value: number) => ({
         encrypt: async () => {
           console.log(`FHE加密值: ${value} for contract: ${contractAddress}`);
-          // 修复FHE加密 - 确保数据不为零
+          // Fix FHE encryption - ensure data is not zero
           if (value === 0) {
-            console.warn('警告: 加密值为0，这可能导致问题');
+            console.warn('Warning: Encrypted value is 0, this may cause issues');
+            // Use 1 as minimum value for FHE encryption
+            value = 1;
           }
           
           // 创建非零的加密数据

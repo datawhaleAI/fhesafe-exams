@@ -1,7 +1,7 @@
 import { useReadContract } from 'wagmi';
 import { useContract } from './useContract';
 
-const CONTRACT_ADDRESS = import.meta.env.VITE_CONTRACT_ADDRESS || import.meta.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '0x04FA6321a2C2c255EEA836A1A4523e935E17959B';
+const CONTRACT_ADDRESS = import.meta.env.VITE_CONTRACT_ADDRESS || import.meta.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '0x2C92539FEb49aA375Ba47e73f0bb0CC6D4a74854';
 
 const CONTRACT_ABI = [
   {

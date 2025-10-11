@@ -333,4 +333,28 @@ contract FHESafeExams is SepoliaConfig {
             certificate.issueTime
         );
     }
+    
+    // Test function for debugging - register student without FHE
+    function registerStudentTest(uint256 studentId) public returns (uint256) {
+        require(studentAddressToId[msg.sender] == 0, "Student already registered");
+        
+        uint256 newStudentId = studentCounter++;
+        
+        // Create a simple student record without FHE for testing
+        students[newStudentId] = Student({
+            studentId: FHE.asEuint32(0), // Will be set to actual value later
+            examScore: FHE.asEuint32(0),
+            totalExams: FHE.asEuint32(0),
+            passCount: FHE.asEuint32(0),
+            isRegistered: FHE.asEbool(true),
+            isVerified: FHE.asEbool(false),
+            walletAddress: msg.sender,
+            registrationTime: block.timestamp
+        });
+        
+        studentAddressToId[msg.sender] = newStudentId;
+        
+        emit StudentRegistered(newStudentId, msg.sender);
+        return newStudentId;
+    }
 }

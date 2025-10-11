@@ -8,38 +8,28 @@ async function main() {
   console.log("📝 Deploying contracts with account:", deployer.address);
   
   // Check balance
-  const balance = await deployer.getBalance();
-  console.log("💰 Account balance:", ethers.utils.formatEther(balance), "ETH");
+  const balance = await deployer.provider.getBalance(deployer.address);
+  console.log("💰 Account balance:", ethers.formatEther(balance), "ETH");
   
-  if (balance.lt(ethers.utils.parseEther("0.01"))) {
+  if (balance < ethers.parseEther("0.01")) {
     console.error("❌ Insufficient balance for deployment. Please add Sepolia ETH to your account.");
     process.exit(1);
   }
   
   // Deploy the contract
-  console.log("📦 Deploying FHESafeExams contract...");
-  const FHESafeExams = await ethers.getContractFactory("FHESafeExams");
+  console.log("📦 Deploying ExamContract...");
+  const ExamContract = await ethers.getContractFactory("ExamContract");
   
-  // Use deployer address as verifier for now
-  const verifier = deployer.address;
-  const fheSafeExams = await FHESafeExams.deploy(verifier);
+  const examContract = await ExamContract.deploy();
+  await examContract.waitForDeployment();
   
-  await fheSafeExams.deployed();
-  
-  console.log("✅ FHESafeExams deployed to:", fheSafeExams.address);
-  console.log("🔍 Verifier address:", verifier);
-  
-  // Add deployer as instructor
-  console.log("👨‍🏫 Adding deployer as instructor...");
-  const addInstructorTx = await fheSafeExams.addInstructor(deployer.address);
-  await addInstructorTx.wait();
-  console.log("✅ Deployer added as instructor");
+  const contractAddress = await examContract.getAddress();
+  console.log("✅ ExamContract deployed to:", contractAddress);
   
   // Save deployment info
   const deploymentInfo = {
     network: "sepolia",
-    contractAddress: fheSafeExams.address,
-    verifier: verifier,
+    contractAddress: contractAddress,
     deployer: deployer.address,
     timestamp: new Date().toISOString(),
     blockNumber: await ethers.provider.getBlockNumber()

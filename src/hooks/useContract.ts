@@ -388,8 +388,13 @@ export const useContract = () => {
     // Use the test function for now to bypass FHE validation
     console.log('Using test function to bypass FHE validation');
     
-    // Create a minimal ABI with only the function we need
-    const testABI = [
+    // Force a completely new approach - use a different function name
+    console.log('Attempting to call attemptExamTest with explicit parameters');
+    console.log('Contract address:', CONTRACT_ADDRESS);
+    console.log('Parameters:', { examId, score, timeSpent });
+    
+    // Create a completely isolated ABI
+    const isolatedABI = [
       {
         "inputs": [
           {"internalType": "uint256", "name": "examId", "type": "uint256"},
@@ -403,15 +408,23 @@ export const useContract = () => {
       }
     ] as const;
     
-    console.log('Using minimal ABI for attemptExamTest');
+    console.log('Using isolated ABI for attemptExamTest');
+    console.log('ABI:', JSON.stringify(isolatedABI, null, 2));
     
-    // Call the test function directly with minimal ABI
-    return writeContract({
-      address: CONTRACT_ADDRESS as `0x${string}`,
-      abi: testABI,
-      functionName: 'attemptExamTest',
-      args: [BigInt(examId), BigInt(score), BigInt(timeSpent)],
-    } as any);
+    try {
+      const result = await writeContract({
+        address: CONTRACT_ADDRESS as `0x${string}`,
+        abi: isolatedABI,
+        functionName: 'attemptExamTest',
+        args: [BigInt(examId), BigInt(score), BigInt(timeSpent)],
+      } as any);
+      
+      console.log('Write contract result:', result);
+      return result;
+    } catch (error) {
+      console.error('Error calling attemptExamTest:', error);
+      throw error;
+    }
   };
 
   const getStudentInfo = (studentId: number) => {

@@ -110,3 +110,15 @@ artifacts/
 # Solidity
 contracts/artifacts/
 contracts/cache/
+
+# Private keys and sensitive data
+*.key
+*.pem
+private-keys/
+secrets/
+.env.*
+!.env.example
+
+# Deployment artifacts
+deployments/
+.openzeppelin/

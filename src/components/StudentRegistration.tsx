@@ -3,10 +3,11 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { User, Shield, CheckCircle } from "lucide-react";
+import { User, Shield, CheckCircle, ArrowLeft } from "lucide-react";
 import { useAccount } from 'wagmi';
 import { useContract } from '@/hooks/useContract';
 import { toast } from 'sonner';
+import { Link } from 'react-router-dom';
 
 const StudentRegistration = () => {
   const [isRegistering, setIsRegistering] = useState(false);
@@ -131,9 +132,23 @@ const StudentRegistration = () => {
 
               {isConfirmed && (
                 <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 mb-4">
                     <CheckCircle className="w-4 h-4 text-green-600" />
                     <p className="text-green-600 text-sm">Registration confirmed! You can now take exams.</p>
+                  </div>
+                  <div className="flex gap-3 justify-center">
+                    <Button asChild variant="outline">
+                      <Link to="/dashboard">
+                        <User className="w-4 h-4 mr-2" />
+                        Go to Dashboard
+                      </Link>
+                    </Button>
+                    <Button asChild>
+                      <Link to="/">
+                        <ArrowLeft className="w-4 h-4 mr-2" />
+                        Back to Home
+                      </Link>
+                    </Button>
                   </div>
                 </div>
               )}

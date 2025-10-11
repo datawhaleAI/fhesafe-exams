@@ -13,7 +13,7 @@ const ExamInterface = () => {
   const [timeLeft] = useState("02:45:30");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { isConnected } = useAccount();
-  const { createExam, isPending, isConfirming, isConfirmed, error } = useContract();
+  const { attemptExam, isPending, isConfirming, isConfirmed, error } = useContract();
 
   const updateAnswer = (index: number, value: string) => {
     const newAnswers = [...answers];
@@ -35,13 +35,10 @@ const ExamInterface = () => {
       }, 0);
 
       // Submit exam attempt to blockchain
-      await createExam(
-        "Cryptography & Blockchain Security Exam",
-        "Final exam covering FHE and blockchain security concepts",
-        100,
-        60,
-        180, // 3 hours in minutes
-        180 * 60 // 3 hours in seconds
+      await attemptExam(
+        0, // Exam ID (using first exam)
+        score,
+        180 // Time spent in minutes
       );
 
       toast.success('Exam submitted successfully! Your answers are encrypted and stored on-chain.');

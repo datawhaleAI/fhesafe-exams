@@ -131,6 +131,40 @@ const CONTRACT_ABI = [
     "inputs": [
       {
         "internalType": "uint256",
+        "name": "examId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint32",
+        "name": "score",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint32",
+        "name": "timeSpent",
+        "type": "uint32"
+      },
+      {
+        "internalType": "bytes",
+        "name": "inputProof",
+        "type": "bytes"
+      }
+    ],
+    "name": "attemptExam",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
         "name": "studentId",
         "type": "uint256"
       }
@@ -269,6 +303,23 @@ export const useContract = () => {
     });
   };
 
+  const attemptExam = async (
+    examId: number,
+    score: number,
+    timeSpent: number
+  ) => {
+    if (!isConnected) throw new Error('Wallet not connected');
+    
+    // For now, we'll use a simplified version without FHE encryption
+    // In a real implementation, you would need to encrypt the values
+    return writeContract({
+      address: CONTRACT_ADDRESS as `0x${string}`,
+      abi: CONTRACT_ABI,
+      functionName: 'attemptExam',
+      args: [BigInt(examId), score, timeSpent, "0x"], // Simplified without FHE
+    });
+  };
+
   const getStudentInfo = (studentId: number) => {
     return useReadContract({
       address: CONTRACT_ADDRESS as `0x${string}`,
@@ -289,6 +340,7 @@ export const useContract = () => {
 
   return {
     createExam,
+    attemptExam,
     getStudentInfo,
     getExamInfo,
     isPending,

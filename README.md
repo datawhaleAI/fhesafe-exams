@@ -18,6 +18,9 @@ FHESafe Exams provides a streamlined exam platform using **Fully Homomorphic Enc
 - **Wallet Authentication**: Secure Web3 identity verification
 - **Privacy Protection**: Answers remain encrypted until submission deadline
 
+### 📹 **Demo Video**
+Watch the platform in action: [Demo Video](demo.mov) (4.1MB)
+
 ---
 
 ## 🛠️ **Technology Stack**
@@ -33,6 +36,16 @@ FHESafe Exams provides a streamlined exam platform using **Fully Homomorphic Enc
 - ⛓️ **Ethereum Sepolia** testnet
 - 📜 **Solidity** smart contracts
 - 🔑 **Web3 Wallet** authentication
+
+### **Smart Contract**
+- **Contract Name**: `FHESafeExams`
+- **Network**: Ethereum Sepolia (Chain ID: 11155111)
+- **Contract Address**: `0x2C92539FEb49aA375Ba47e73f0bb0CC6D4a74854`
+- **Features**: 
+  - FHE-encrypted student registration
+  - Encrypted exam submission
+  - Privacy-preserving grading
+  - Blockchain-verified certificates
 
 ---
 
@@ -64,13 +77,13 @@ Create a `.env` file with the following variables:
 ```env
 # Blockchain Configuration
 NEXT_PUBLIC_CHAIN_ID=11155111
-NEXT_PUBLIC_RPC_URL=https://sepolia.infura.io/v3/YOUR_INFURA_API_KEY
+NEXT_PUBLIC_RPC_URL=https://sepolia.drpc.org
 
 # Wallet Connect
 NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=YOUR_WALLET_CONNECT_PROJECT_ID
 
-# Contract Address
-NEXT_PUBLIC_CONTRACT_ADDRESS=YOUR_DEPLOYED_CONTRACT_ADDRESS
+# Contract Address (Deployed)
+NEXT_PUBLIC_CONTRACT_ADDRESS=0x2C92539FEb49aA375Ba47e73f0bb0CC6D4a74854
 ```
 
 ---

@@ -1,6 +1,6 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { Card } from "@/components/ui/card";
-import { Wallet, Shield, CheckCircle } from "lucide-react";
+import { Wallet, Lock, CheckCircle } from "lucide-react";
 import { useAccount } from 'wagmi';
 
 const WalletConnect = () => {
@@ -17,7 +17,7 @@ const WalletConnect = () => {
           Student ID: {address.slice(0, 6)}...{address.slice(-4)}
         </p>
         <div className="flex items-center gap-2 text-sm text-green-200">
-          <Shield className="w-4 h-4" />
+          <Lock className="w-4 h-4" />
           <span>Identity verified with blockchain</span>
         </div>
         <div className="mt-4">

@@ -29,8 +29,8 @@ const Index = () => {
         <div className="container mx-auto max-w-6xl py-6 px-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <Shield className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                <Lock className="w-6 h-6 text-white" />
               </div>
               <h1 className="text-2xl font-bold text-primary">FHESafe Exams</h1>
             </div>

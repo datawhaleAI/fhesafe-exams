@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { User, Shield, CheckCircle, ArrowLeft } from "lucide-react";
+import { User, Lock, CheckCircle, ArrowLeft } from "lucide-react";
 import { useAccount } from 'wagmi';
 import { useContract } from '@/hooks/useContract';
 import { toast } from 'sonner';
@@ -70,7 +70,7 @@ const StudentRegistration = () => {
         <div className="container mx-auto max-w-2xl">
           <Card className="p-8">
             <div className="text-center mb-8">
-              <Shield className="w-16 h-16 text-primary mx-auto mb-4" />
+              <Lock className="w-16 h-16 text-primary mx-auto mb-4" />
               <h2 className="text-2xl font-bold text-primary mb-2">Register as Student</h2>
               <p className="text-muted-foreground">
                 Register with your wallet address to access exams. Your information will be encrypted using FHE.
@@ -95,7 +95,7 @@ const StudentRegistration = () => {
 
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                 <div className="flex items-start gap-3">
-                  <Shield className="w-5 h-5 text-blue-600 mt-0.5" />
+                  <Lock className="w-5 h-5 text-blue-600 mt-0.5" />
                   <div>
                     <h3 className="text-sm font-medium text-blue-900">FHE Protection</h3>
                     <p className="text-xs text-blue-700 mt-1">

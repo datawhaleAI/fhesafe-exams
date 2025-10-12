@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Lock, Eye, EyeOff, Clock, Shield, Key } from "lucide-react";
+import { Lock, Eye, EyeOff, Clock, Key } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useAccount } from 'wagmi';
 import { useContract } from '@/hooks/useContract';
@@ -251,7 +251,7 @@ const ExamInterface = () => {
                   Your Answer (Encrypted)
                 </label>
                 <div className="flex items-center gap-2 text-xs text-exam-locked">
-                  <Shield className="w-3 h-3 animate-encrypt-pulse" />
+                  <Lock className="w-3 h-3 animate-encrypt-pulse" />
                   <span>FHE加密保护</span>
                 </div>
               </div>
@@ -289,7 +289,7 @@ const ExamInterface = () => {
       {/* Submit Section */}
       <Card className="p-6 bg-gradient-secure text-white border-0">
         <div className="text-center">
-          <Shield className="w-12 h-12 mx-auto mb-4 animate-secure-glow" />
+          <Lock className="w-12 h-12 mx-auto mb-4 animate-secure-glow" />
           <h3 className="text-xl font-bold mb-2">Exam Submission</h3>
           <p className="text-green-100 mb-6">
             Your answers are protected by FHE (Fully Homomorphic Encryption) and will remain confidential.
